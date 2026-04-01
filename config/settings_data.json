@@ -9,13 +9,13 @@
  */
 {
   "current": {
-    "color_background": "#f6f9ff",
-    "color_panel": "#ffffff",
-    "color_text": "#0f172a",
+    "color_background": "#fdf4eb",
+    "color_panel": "#c1634a",
+    "color_text": "#b02e27",
     "color_muted": "#475569",
-    "color_accent": "#2563eb",
-    "color_price": "#b91c1c",
-    "color_border": "#c9d8fb",
+    "color_accent": "#2063a2",
+    "color_price": "#b02e27",
+    "color_border": "#8faaca",
     "font_body": "\"Times New Roman\", Times, serif",
     "font_size_base": 16,
     "page_width": 980,
