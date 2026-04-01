@@ -18,40 +18,9 @@
         "empty_title": "Create products in Shopify",
         "empty_message": "Then add them to the Frontpage collection to populate this home section."
       }
-    },
-    "main_page_GwxcpX": {
-      "type": "main-page",
-      "blocks": {
-        "image_bVqMe7": {
-          "type": "image",
-          "settings": {
-            "image_alt": "",
-            "caption": "",
-            "max_width": 800
-          }
-        },
-        "text_EEEfbT": {
-          "type": "text",
-          "settings": {
-            "content": ""
-          }
-        }
-      },
-      "block_order": [
-        "image_bVqMe7",
-        "text_EEEfbT"
-      ],
-      "name": "Page content",
-      "settings": {
-        "show_title": true,
-        "page_heading": "",
-        "intro_text": "",
-        "show_page_content": true
-      }
     }
   },
   "order": [
-    "main",
-    "main_page_GwxcpX"
+    "main"
   ]
 }

@@ -26,8 +26,8 @@
       "site-header": {
         "type": "site-header",
         "settings": {
-          "logo_image": "shopify://shop_images/IMG_6759.jpg",
-          "logo_height": 32,
+          "logo_image": "shopify://shop_images/NU_logo_v2.png",
+          "logo_height": 100,
           "show_flag": true,
           "checkout_label": "Checkout"
         }
