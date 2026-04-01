@@ -1,0 +1,53 @@
+<section class="panel section-wrap">
+  <div class="product-detail">
+    <div class="product-detail__media">
+      {% if product.featured_image %}
+        <img src="{{ product.featured_image | image_url: width: 900 }}" alt="{{ product.featured_image.alt | escape }}">
+      {% endif %}
+    </div>
+    <div class="product-detail__info">
+      <h1 class="product-detail__title">{{ product.title }}</h1>
+      <div class="product-detail__price">{{ product.price | money }}</div>
+      {% if section.settings.show_description %}
+        <div class="product-detail__description rte">{{ product.description }}</div>
+      {% endif %}
+      <div class="product-detail__actions">
+        {% form 'product', product %}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+          <button class="btn" type="submit">{{ section.settings.add_to_cart_label }}</button>
+        {% endform %}
+        <a class="btn secondary" href="{{ routes.cart_url }}">{{ section.settings.checkout_label }}</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Product page",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show product description",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "add_to_cart_label",
+      "label": "Add to cart button label",
+      "default": "Add to cart"
+    },
+    {
+      "type": "text",
+      "id": "checkout_label",
+      "label": "Checkout button label",
+      "default": "Checkout"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product page"
+    }
+  ]
+}
+{% endschema %}

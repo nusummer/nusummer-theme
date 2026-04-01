@@ -1,0 +1,118 @@
+[
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Page background",
+        "default": "#f6f9ff"
+      },
+      {
+        "type": "color",
+        "id": "color_panel",
+        "label": "Panel / card background",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Body text",
+        "default": "#0f172a"
+      },
+      {
+        "type": "color",
+        "id": "color_muted",
+        "label": "Muted / secondary text",
+        "default": "#475569"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Accent / link color",
+        "default": "#2563eb"
+      },
+      {
+        "type": "color",
+        "id": "color_price",
+        "label": "Price color",
+        "default": "#b91c1c"
+      },
+      {
+        "type": "color",
+        "id": "color_border",
+        "label": "Border color",
+        "default": "#c9d8fb"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "select",
+        "id": "font_body",
+        "label": "Body font",
+        "options": [
+          { "value": "\"Times New Roman\", Times, serif", "label": "Times New Roman (serif)" },
+          { "value": "Georgia, serif", "label": "Georgia (serif)" },
+          { "value": "system-ui, -apple-system, sans-serif", "label": "System (sans-serif)" },
+          { "value": "\"Courier New\", Courier, monospace", "label": "Courier New (monospace)" }
+        ],
+        "default": "\"Times New Roman\", Times, serif"
+      },
+      {
+        "type": "range",
+        "id": "font_size_base",
+        "label": "Base font size",
+        "min": 13,
+        "max": 20,
+        "step": 1,
+        "unit": "px",
+        "default": 16
+      }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      {
+        "type": "range",
+        "id": "page_width",
+        "label": "Max page width",
+        "min": 800,
+        "max": 1400,
+        "step": 20,
+        "unit": "px",
+        "default": 980
+      },
+      {
+        "type": "range",
+        "id": "sidebar_width",
+        "label": "Sidebar width",
+        "min": 160,
+        "max": 320,
+        "step": 10,
+        "unit": "px",
+        "default": 230
+      }
+    ]
+  },
+  {
+    "name": "Brand",
+    "settings": [
+      {
+        "type": "text",
+        "id": "logo_text",
+        "label": "Logo text",
+        "default": "Nu Summer"
+      },
+      {
+        "type": "text",
+        "id": "status_text",
+        "label": "Sidebar status message",
+        "default": "This website is always under construction."
+      }
+    ]
+  }
+]

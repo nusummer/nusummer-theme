@@ -1,0 +1,165 @@
+<section class="panel section-wrap">
+  {% if section.settings.show_title %}
+    <h1>{{ section.settings.page_heading | default: page.title }}</h1>
+  {% endif %}
+
+  {% if section.settings.intro_text != blank %}
+    <p class="page-intro rte">{{ section.settings.intro_text }}</p>
+  {% endif %}
+
+  {% for block in section.blocks %}
+    {% case block.type %}
+      {% when 'heading' %}
+        <h2 class="page-block-heading" {{ block.shopify_attributes }}>{{ block.settings.heading }}</h2>
+
+      {% when 'text' %}
+        <div class="rte page-block-text" {{ block.shopify_attributes }}>
+          {{ block.settings.content }}
+        </div>
+
+      {% when 'image' %}
+        {% if block.settings.image != blank %}
+          <div class="page-block-image" {{ block.shopify_attributes }}>
+            <img
+              src="{{ block.settings.image | image_url: width: 1200 }}"
+              alt="{{ block.settings.image_alt | escape }}"
+              loading="lazy"
+              style="width:100%;max-width:{{ block.settings.max_width }}px;">
+            {% if block.settings.caption != blank %}
+              <p class="page-block-caption">{{ block.settings.caption }}</p>
+            {% endif %}
+          </div>
+        {% endif %}
+
+      {% when 'button' %}
+        <div class="page-block-button" {{ block.shopify_attributes }}>
+          <a href="{{ block.settings.button_url }}" class="btn">{{ block.settings.button_label }}</a>
+        </div>
+
+    {% endcase %}
+  {% endfor %}
+
+  {% if section.settings.show_page_content and page.content != blank %}
+    <div class="rte">{{ page.content }}</div>
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "Page content",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_title",
+      "label": "Show page title",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "page_heading",
+      "label": "Override page title",
+      "info": "Leave blank to use the page title set in Shopify admin."
+    },
+    {
+      "type": "textarea",
+      "id": "intro_text",
+      "label": "Intro paragraph",
+      "info": "Short description shown below the title."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_page_content",
+      "label": "Show page body content",
+      "default": true,
+      "info": "Renders the rich-text content from the Pages editor in Shopify admin."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "Heading",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Section heading"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text block",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>Add your content here. This text is fully editable from the Shopify theme editor.</p>"
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Alt text",
+          "info": "Describe the image for accessibility and SEO."
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption"
+        },
+        {
+          "type": "range",
+          "id": "max_width",
+          "label": "Max image width (px)",
+          "min": 200,
+          "max": 1200,
+          "step": 50,
+          "default": 800
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Button",
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "Learn more"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Button link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Page content",
+      "blocks": [
+        {
+          "type": "text",
+          "settings": {
+            "content": "<p>Add your content here. This text is fully editable from the Shopify theme editor.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

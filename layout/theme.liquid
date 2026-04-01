@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>{% if page_title %}{{ page_title }} | {% endif %}{{ shop.name }}</title>
+    <meta name="description" content="{{ page_description | escape }}">
+    {{ content_for_header }}
+    {{ 'theme.css' | asset_url | stylesheet_tag }}
+    <style>
+      :root {
+        --bg: {{ settings.color_background }};
+        --panel: {{ settings.color_panel }};
+        --text: {{ settings.color_text }};
+        --muted: {{ settings.color_muted }};
+        --accent: {{ settings.color_accent }};
+        --blue: {{ settings.color_accent }};
+        --price: {{ settings.color_price }};
+        --edge: {{ settings.color_border }};
+        --wrap: {{ settings.page_width }}px;
+        --sidebar: {{ settings.sidebar_width }}px;
+      }
+      body {
+        font-family: {{ settings.font_body }};
+        font-size: {{ settings.font_size_base }}px;
+      }
+    </style>
+    <script src="{{ 'theme.js' | asset_url }}" defer></script>
+  </head>
+  <body>
+    <div class="page-width">
+      {% section 'site-header' %}
+      <div class="main-grid">
+        {% section 'sidebar-nav' %}
+        <main>
+          {{ content_for_layout }}
+        </main>
+      </div>
+    </div>
+    {% section 'site-footer' %}
+  </body>
+</html>

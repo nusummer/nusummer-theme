@@ -1,0 +1,19 @@
+<article class="card">
+  <div class="card-media">
+    {% if product.featured_image %}
+      <img src="{{ product.featured_image | image_url: width: 900 }}" alt="{{ product.featured_image.alt | escape }}">
+    {% endif %}
+  </div>
+  <h3 class="card-title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+  <div class="card-price">{{ product.price | money }}</div>
+  {% if show_description != false %}
+    <div class="card-body">{{ product.description | strip_html | truncate: 120 }}</div>
+  {% endif %}
+  <div class="card-actions">
+    {% form 'product', product %}
+      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+      <button class="btn" type="submit">Add to cart</button>
+    {% endform %}
+    <a class="btn secondary" href="{{ product.url }}">View</a>
+  </div>
+</article>

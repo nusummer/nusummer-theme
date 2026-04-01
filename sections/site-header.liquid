@@ -1,0 +1,63 @@
+<header class="site-header">
+  <a class="logo-link" href="{{ routes.root_url }}">
+    {% if section.settings.logo_image != blank %}
+      <img
+        class="logo-img"
+        src="{{ section.settings.logo_image | image_url: width: 300 }}"
+        alt="{{ shop.name }}"
+        style="height: {{ section.settings.logo_height }}px; width: auto;"
+      >
+    {% else %}
+      <div class="logo">{{ settings.logo_text }}</div>
+    {% endif %}
+  </a>
+  <div class="header-right">
+    {% if section.settings.show_flag %}
+      <div class="flag" aria-label="United States flag" title="USA">
+        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <g fill-rule="evenodd" stroke-width="1pt">
+            <path fill="#bd3d44" d="M0 0h640v480H0z"/>
+            <path fill="#fff" d="M0 55.4h640v55.4H0zm0 110.8h640v55.4H0zm0 110.8h640v55.4H0zm0 110.8h640V448H0z"/>
+            <path fill="#192f5d" d="M0 0h296v221.6H0z"/>
+          </g>
+        </svg>
+      </div>
+    {% endif %}
+    <a class="checkout-pill" href="{{ routes.cart_url }}">{{ section.settings.checkout_label }}</a>
+  </div>
+</header>
+{% schema %}
+{
+  "name": "Site header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo image",
+      "info": "Replaces the logo text when set. PNG with transparent background recommended."
+    },
+    {
+      "type": "range",
+      "id": "logo_height",
+      "label": "Logo image height",
+      "min": 32,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "checkbox",
+      "id": "show_flag",
+      "label": "Show USA flag",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "checkout_label",
+      "label": "Checkout button label",
+      "default": "Checkout"
+    }
+  ]
+}
+{% endschema %}

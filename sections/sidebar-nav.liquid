@@ -1,0 +1,69 @@
+<aside>
+  <nav class="menu panel sidebar-nav">
+    {% if section.blocks.size > 0 %}
+      {% for block in section.blocks %}
+        <a class="sidebar-link" href="{{ block.settings.url }}" {{ block.shopify_attributes }}>
+          <span>{{ block.settings.label }}</span>
+        </a>
+      {% endfor %}
+    {% else %}
+      <a class="sidebar-link" href="{{ '/pages/home' | relative_url }}"><span>Home</span></a>
+      <a class="sidebar-link" href="{{ '/pages/about' | relative_url }}"><span>About</span></a>
+      <a class="sidebar-link" href="{{ '/pages/contact' | relative_url }}"><span>Contact</span></a>
+    {% endif %}
+  </nav>
+  {% if section.settings.show_status %}
+    <div class="panel status-box">
+      <h3>{{ section.settings.status_text | default: settings.status_text }}</h3>
+    </div>
+  {% endif %}
+</aside>
+{% schema %}
+{
+  "name": "Sidebar nav",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_status",
+      "label": "Show status box",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "status_text",
+      "label": "Status message",
+      "info": "Leave blank to use the global status message from Theme settings → Brand."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "nav_link",
+      "name": "Navigation link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "New link"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "URL"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 20,
+  "presets": [
+    {
+      "name": "Sidebar nav",
+      "blocks": [
+        { "type": "nav_link", "settings": { "label": "Home", "url": "/pages/home" } },
+        { "type": "nav_link", "settings": { "label": "About", "url": "/pages/about" } },
+        { "type": "nav_link", "settings": { "label": "Contact", "url": "/pages/contact" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

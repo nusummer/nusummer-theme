@@ -1,0 +1,95 @@
+<footer class="footer">
+  <div class="legal">
+    {% if section.settings.show_notice %}
+      <h4>{{ section.settings.notice_heading }}</h4>
+      <div>{{ section.settings.notice_body }}</div>
+      {% if section.blocks.size > 0 %}
+        <ul>
+          {% for block in section.blocks %}
+            {% if block.type == 'sds_link' and block.settings.label != blank and block.settings.url != blank %}
+              <li {{ block.shopify_attributes }}>
+                <a href="{{ block.settings.url }}">{{ block.settings.label }}</a>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endif %}
+    <h4>{{ section.settings.general_heading }}</h4>
+    <p>&copy; <span id="year"></span> {{ shop.name }}. {{ section.settings.copyright_suffix }}</p>
+  </div>
+</footer>
+{% schema %}
+{
+  "name": "Site footer",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Legal notice"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_notice",
+      "label": "Show legal notice",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "notice_heading",
+      "label": "Notice heading",
+      "default": "Research Chemicals — Notice"
+    },
+    {
+      "type": "richtext",
+      "id": "notice_body",
+      "label": "Notice body",
+      "default": "<p>Products in the \"Research Chemicals\" category are supplied strictly for <strong>laboratory research use only</strong>. Not for human consumption, veterinary use, medical use, diagnostic use, or household use. Age verification and compliance checks may be required. Provide and review Safety Data Sheets (SDS) prior to handling.</p>"
+    },
+    {
+      "type": "header",
+      "content": "General"
+    },
+    {
+      "type": "text",
+      "id": "general_heading",
+      "label": "General section heading",
+      "default": "General"
+    },
+    {
+      "type": "text",
+      "id": "copyright_suffix",
+      "label": "Copyright suffix",
+      "default": "All rights reserved."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "sds_link",
+      "name": "SDS document link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Link label",
+          "default": "SDS: Document"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "URL",
+          "info": "Create a page in Shopify Admin → Online Store → Pages, then select it here."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Site footer",
+      "blocks": [
+        { "type": "sds_link", "settings": { "label": "SDS: Example Reagent A", "url": "/pages/sds-example-reagent-a" } },
+        { "type": "sds_link", "settings": { "label": "SDS: Example Reagent B", "url": "/pages/sds-example-reagent-b" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

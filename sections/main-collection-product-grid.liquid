@@ -1,0 +1,52 @@
+<section class="panel section-wrap">
+  <h1>{{ collection.title }}</h1>
+  {% if section.settings.show_description and collection.description != blank %}
+    <p class="small">{{ collection.description }}</p>
+  {% endif %}
+  <div class="product-grid">
+    {% for product in collection.products limit: section.settings.products_per_page %}
+      {% render 'product-card', product: product, show_description: section.settings.show_card_description %}
+    {% else %}
+      <p>{{ section.settings.empty_message }}</p>
+    {% endfor %}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Collection product grid",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show collection description",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products per page",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "default": 12
+    },
+    {
+      "type": "checkbox",
+      "id": "show_card_description",
+      "label": "Show product description on cards",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "empty_message",
+      "label": "Empty collection message",
+      "default": "No products found."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection product grid"
+    }
+  ]
+}
+{% endschema %}
