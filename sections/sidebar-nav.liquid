@@ -14,7 +14,7 @@
   </nav>
   {% if section.settings.show_status %}
     <div class="panel status-box">
-      <h3>{{ section.settings.status_text | default: settings.status_text }}</h3>
+      <h3><em>{{ section.settings.status_text | default: settings.status_text }}</em></h3>
     </div>
   {% endif %}
 </aside>
