@@ -27,7 +27,7 @@
         "type": "site-header",
         "settings": {
           "logo_image": "shopify://shop_images/IMG_6759.jpg",
-          "logo_height": 100,
+          "logo_height": 32,
           "show_flag": true,
           "checkout_label": "Checkout"
         }
