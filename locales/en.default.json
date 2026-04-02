@@ -1,6 +1,15 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "general": {
-    "checkout": "Checkout",
+    "checkout": "Check her out",
     "add_to_cart": "Add to cart",
     "view": "View",
     "search": "Search",
@@ -23,7 +32,7 @@
   },
   "search": {
     "title": "Search",
-    "placeholder": "Search products\u2026",
+    "placeholder": "Search products…",
     "no_results": "No results for {{terms}}.",
     "results_count": "{{count}} result(s) for {{terms}}"
   },
