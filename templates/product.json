@@ -14,7 +14,9 @@
       "settings": {
         "show_description": true,
         "add_to_cart_label": "Add to cart",
-        "checkout_label": "{{ product.vendor }}"
+        "checkout_label": "View cart",
+        "show_shop_pay": true,
+        "show_view_cart_button": true
       }
     }
   },
