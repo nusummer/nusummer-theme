@@ -9,20 +9,17 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "main-index",
-      "settings": {
-        "heading": "",
-        "collection": "frontpage",
-        "products_limit": 6,
-        "empty_title": "Create products in Shopify",
-        "empty_message": "Then add them to the Frontpage collection to populate this home section."
-      }
-    },
     "main_page_H63cRF": {
       "type": "main-page",
       "blocks": {
         "button_pQ6qc9": {
+          "type": "button",
+          "settings": {
+            "button_label": "As Seen on TV",
+            "button_url": "shopify://products/as-seen-on-tv-trucker-hat"
+          }
+        },
+        "button_LFDqMW": {
           "type": "button",
           "settings": {
             "button_label": "Buy Trucker Hat",
@@ -54,6 +51,7 @@
       },
       "block_order": [
         "button_pQ6qc9",
+        "button_LFDqMW",
         "image_AmCyfA",
         "button_4pLft4",
         "text_AJkhry"
@@ -64,6 +62,16 @@
         "page_heading": "",
         "intro_text": "",
         "show_page_content": true
+      }
+    },
+    "main": {
+      "type": "main-index",
+      "settings": {
+        "heading": "",
+        "collection": "frontpage",
+        "products_limit": 6,
+        "empty_title": "Create products in Shopify",
+        "empty_message": "Then add them to the Frontpage collection to populate this home section."
       }
     }
   },
