@@ -1,9 +1,34 @@
-<section class="panel section-wrap">
-  <h1>{{ collection.title }}</h1>
-  {% if section.settings.show_description and collection.description != blank %}
-    <p class="small">{{ collection.description }}</p>
+{% assign col_setting = section.settings.columns %}
+{% if col_setting == '2' %}
+  {% assign grid_cols = 'repeat(2, 1fr)' %}
+{% elsif col_setting == '3' %}
+  {% assign grid_cols = 'repeat(3, 1fr)' %}
+{% elsif col_setting == '4' %}
+  {% assign grid_cols = 'repeat(4, 1fr)' %}
+{% else %}
+  {% assign grid_cols = 'repeat(auto-fit, minmax(240px, 1fr))' %}
+{% endif %}
+
+<section
+  class="panel section-wrap"
+  style="
+    background: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  {% if section.settings.show_title %}
+    <h1 style="color: {{ section.settings.title_color }}; font-size: {{ section.settings.title_size }}px;">
+      {{ collection.title }}
+    </h1>
   {% endif %}
-  <div class="product-grid">
+
+  {% if section.settings.show_description and collection.description != blank %}
+    <p class="small" style="color: {{ section.settings.text_color }};">{{ collection.description }}</p>
+  {% endif %}
+
+  <div class="product-grid" style="grid-template-columns: {{ grid_cols }}; gap: {{ section.settings.grid_gap }}px;">
     {% for product in collection.products limit: section.settings.products_per_page %}
       {% render 'product-card', product: product, show_description: section.settings.show_card_description %}
     {% else %}
@@ -11,24 +36,79 @@
     {% endfor %}
   </div>
 </section>
+
 {% schema %}
 {
   "name": "Collection product grid",
   "settings": [
     {
+      "type": "header",
+      "content": "Collection title"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_title",
+      "label": "Show collection title",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title font size",
+      "min": 18,
+      "max": 52,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#0f172a"
+    },
+    {
       "type": "checkbox",
       "id": "show_description",
       "label": "Show collection description",
-      "default": true
+      "default": true,
+      "info": "The description is set on the collection page in your Shopify admin."
+    },
+    {
+      "type": "header",
+      "content": "Products"
     },
     {
       "type": "range",
       "id": "products_per_page",
       "label": "Products per page",
       "min": 4,
-      "max": 24,
+      "max": 48,
       "step": 2,
       "default": 12
+    },
+    {
+      "type": "select",
+      "id": "columns",
+      "label": "Number of columns",
+      "options": [
+        { "value": "auto", "label": "Auto (fills available space)" },
+        { "value": "2", "label": "2 columns" },
+        { "value": "3", "label": "3 columns" },
+        { "value": "4", "label": "4 columns" }
+      ],
+      "default": "auto",
+      "info": "On phones, columns always stack into a single column automatically."
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "label": "Space between product cards",
+      "min": 4,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 16
     },
     {
       "type": "checkbox",
@@ -39,8 +119,44 @@
     {
       "type": "text",
       "id": "empty_message",
-      "label": "Empty collection message",
+      "label": "Message when collection is empty",
       "default": "No products found."
+    },
+    {
+      "type": "header",
+      "content": "Section style"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#0f172a"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top (space above content)",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom (space below content)",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 26
     }
   ],
   "presets": [

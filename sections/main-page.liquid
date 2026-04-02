@@ -1,46 +1,106 @@
-<section class="panel section-wrap">
+<section
+  class="panel section-wrap"
+  style="
+    background: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    max-width: {{ section.settings.content_max_width }}px;
+    margin-left: auto;
+    margin-right: auto;
+  "
+>
   {% if section.settings.show_title %}
-    <h1>{{ section.settings.page_heading | default: page.title }}</h1>
+    <h1 style="color: {{ section.settings.heading_color }}; font-size: {{ section.settings.heading_size }}px;">
+      {{ section.settings.page_heading | default: page.title }}
+    </h1>
   {% endif %}
 
   {% if section.settings.intro_text != blank %}
-    <p class="page-intro rte">{{ section.settings.intro_text }}</p>
+    <p class="page-intro rte" style="color: {{ section.settings.text_color }}; font-size: {{ section.settings.intro_size }}px;">
+      {{ section.settings.intro_text }}
+    </p>
   {% endif %}
 
   {% for block in section.blocks %}
     {% case block.type %}
+
       {% when 'heading' %}
-        <h2 class="page-block-heading" {{ block.shopify_attributes }}>{{ block.settings.heading }}</h2>
+        <h2
+          class="page-block-heading"
+          style="color: {{ block.settings.heading_color }}; font-size: {{ block.settings.heading_size }}px; margin-top: {{ block.settings.spacing_top }}px;"
+          {{ block.shopify_attributes }}
+        >
+          {{ block.settings.heading }}
+        </h2>
 
       {% when 'text' %}
-        <div class="rte page-block-text" {{ block.shopify_attributes }}>
+        <div
+          class="rte page-block-text"
+          style="color: {{ block.settings.text_color }}; font-size: {{ block.settings.text_size }}px; margin-top: {{ block.settings.spacing_top }}px;"
+          {{ block.shopify_attributes }}
+        >
           {{ block.settings.content }}
         </div>
 
       {% when 'image' %}
         {% if block.settings.image != blank %}
-          <div class="page-block-image" {{ block.shopify_attributes }}>
+          <div
+            class="page-block-image"
+            style="text-align: {{ block.settings.image_align }}; margin-top: {{ block.settings.spacing_top }}px;"
+            {{ block.shopify_attributes }}
+          >
             <img
               src="{{ block.settings.image | image_url: width: 1200 }}"
               alt="{{ block.settings.image_alt | escape }}"
               loading="lazy"
-              style="width:100%;max-width:{{ block.settings.max_width }}px;">
+              style="
+                width: 100%;
+                max-width: {{ block.settings.max_width }}px;
+                border-radius: {{ block.settings.border_radius }}px;
+              "
+            >
             {% if block.settings.caption != blank %}
-              <p class="page-block-caption">{{ block.settings.caption }}</p>
+              <p class="page-block-caption" style="color: {{ block.settings.caption_color }}; font-size: 13px; margin-top: 6px;">
+                {{ block.settings.caption }}
+              </p>
             {% endif %}
           </div>
         {% endif %}
 
       {% when 'button' %}
-        <div class="page-block-button" {{ block.shopify_attributes }}>
-          <a href="{{ block.settings.button_url }}" class="btn">{{ block.settings.button_label }}</a>
+        <div
+          class="page-block-button"
+          style="margin-top: {{ block.settings.spacing_top }}px; text-align: {{ block.settings.button_align }};"
+          {{ block.shopify_attributes }}
+        >
+          <a
+            href="{{ block.settings.button_url }}"
+            class="btn"
+            style="background: {{ block.settings.btn_bg_color }}; color: {{ block.settings.btn_text_color }};"
+          >
+            {{ block.settings.button_label }}
+          </a>
         </div>
+
+      {% when 'divider' %}
+        <hr
+          style="
+            border: none;
+            border-top: {{ block.settings.thickness }}px solid {{ block.settings.color }};
+            margin: {{ block.settings.spacing }}px 0;
+          "
+          {{ block.shopify_attributes }}
+        >
+
+      {% when 'spacer' %}
+        <div style="height: {{ block.settings.height }}px;" {{ block.shopify_attributes }}></div>
 
     {% endcase %}
   {% endfor %}
 
   {% if section.settings.show_page_content and page.content != blank %}
-    <div class="rte">{{ page.content }}</div>
+    <div class="rte" style="color: {{ section.settings.text_color }};">{{ page.content }}</div>
   {% endif %}
 </section>
 
@@ -48,6 +108,10 @@
 {
   "name": "Page content",
   "settings": [
+    {
+      "type": "header",
+      "content": "Page title"
+    },
     {
       "type": "checkbox",
       "id": "show_title",
@@ -58,20 +122,101 @@
       "type": "text",
       "id": "page_heading",
       "label": "Override page title",
-      "info": "Leave blank to use the page title set in Shopify admin."
+      "info": "Leave blank to use the page title set in Shopify admin → Online Store → Pages."
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Title font size",
+      "min": 18,
+      "max": 56,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Title color",
+      "default": "#0f172a"
+    },
+    {
+      "type": "header",
+      "content": "Intro paragraph"
     },
     {
       "type": "textarea",
       "id": "intro_text",
-      "label": "Intro paragraph",
-      "info": "Short description shown below the title."
+      "label": "Intro paragraph text",
+      "info": "A short description shown below the title. Leave blank to hide."
+    },
+    {
+      "type": "range",
+      "id": "intro_size",
+      "label": "Intro text font size",
+      "min": 13,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Page body content"
     },
     {
       "type": "checkbox",
       "id": "show_page_content",
       "label": "Show page body content",
       "default": true,
-      "info": "Renders the rich-text content from the Pages editor in Shopify admin."
+      "info": "Renders the rich-text content written in Shopify admin → Online Store → Pages."
+    },
+    {
+      "type": "header",
+      "content": "Section style"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#334155"
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "label": "Maximum content width",
+      "min": 400,
+      "max": 1400,
+      "step": 20,
+      "unit": "px",
+      "default": 980,
+      "info": "Limits how wide this section can get on large screens."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top (space above content)",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom (space below content)",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 26
     }
   ],
   "blocks": [
@@ -82,8 +227,34 @@
         {
           "type": "text",
           "id": "heading",
-          "label": "Heading",
+          "label": "Heading text",
           "default": "Section heading"
+        },
+        {
+          "type": "range",
+          "id": "heading_size",
+          "label": "Heading size",
+          "min": 16,
+          "max": 48,
+          "step": 2,
+          "unit": "px",
+          "default": 22
+        },
+        {
+          "type": "color",
+          "id": "heading_color",
+          "label": "Heading color",
+          "default": "#0f172a"
+        },
+        {
+          "type": "range",
+          "id": "spacing_top",
+          "label": "Space above this heading",
+          "min": 0,
+          "max": 80,
+          "step": 4,
+          "unit": "px",
+          "default": 24
         }
       ]
     },
@@ -96,6 +267,32 @@
           "id": "content",
           "label": "Content",
           "default": "<p>Add your content here. This text is fully editable from the Shopify theme editor.</p>"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color",
+          "default": "#334155"
+        },
+        {
+          "type": "range",
+          "id": "text_size",
+          "label": "Text size",
+          "min": 12,
+          "max": 24,
+          "step": 1,
+          "unit": "px",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "spacing_top",
+          "label": "Space above this text block",
+          "min": 0,
+          "max": 80,
+          "step": 4,
+          "unit": "px",
+          "default": 12
         }
       ]
     },
@@ -111,22 +308,61 @@
         {
           "type": "text",
           "id": "image_alt",
-          "label": "Alt text",
-          "info": "Describe the image for accessibility and SEO."
+          "label": "Image description (alt text)",
+          "info": "Briefly describe the image. This helps with search engines and accessibility."
         },
         {
           "type": "text",
           "id": "caption",
-          "label": "Caption"
+          "label": "Caption",
+          "info": "Optional small text shown below the image."
+        },
+        {
+          "type": "color",
+          "id": "caption_color",
+          "label": "Caption text color",
+          "default": "#475569"
         },
         {
           "type": "range",
           "id": "max_width",
-          "label": "Max image width (px)",
-          "min": 200,
+          "label": "Maximum image width",
+          "min": 100,
           "max": 1200,
           "step": 50,
+          "unit": "px",
           "default": 800
+        },
+        {
+          "type": "range",
+          "id": "border_radius",
+          "label": "Image corner roundness",
+          "min": 0,
+          "max": 24,
+          "step": 2,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "select",
+          "id": "image_align",
+          "label": "Image alignment",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "range",
+          "id": "spacing_top",
+          "label": "Space above this image",
+          "min": 0,
+          "max": 80,
+          "step": 4,
+          "unit": "px",
+          "default": 16
         }
       ]
     },
@@ -143,7 +379,89 @@
         {
           "type": "url",
           "id": "button_url",
-          "label": "Button link"
+          "label": "Button link",
+          "info": "Where this button takes the customer when clicked."
+        },
+        {
+          "type": "color",
+          "id": "btn_bg_color",
+          "label": "Button background color",
+          "default": "#3b82f6"
+        },
+        {
+          "type": "color",
+          "id": "btn_text_color",
+          "label": "Button text color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "select",
+          "id": "button_align",
+          "label": "Button alignment",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "range",
+          "id": "spacing_top",
+          "label": "Space above this button",
+          "min": 0,
+          "max": 80,
+          "step": 4,
+          "unit": "px",
+          "default": 16
+        }
+      ]
+    },
+    {
+      "type": "divider",
+      "name": "Divider line",
+      "settings": [
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Line color",
+          "default": "#dbe4ff"
+        },
+        {
+          "type": "range",
+          "id": "thickness",
+          "label": "Line thickness",
+          "min": 1,
+          "max": 8,
+          "step": 1,
+          "unit": "px",
+          "default": 1
+        },
+        {
+          "type": "range",
+          "id": "spacing",
+          "label": "Space above and below line",
+          "min": 4,
+          "max": 60,
+          "step": 4,
+          "unit": "px",
+          "default": 24
+        }
+      ]
+    },
+    {
+      "type": "spacer",
+      "name": "Spacer (blank space)",
+      "settings": [
+        {
+          "type": "range",
+          "id": "height",
+          "label": "Height of blank space",
+          "min": 8,
+          "max": 120,
+          "step": 4,
+          "unit": "px",
+          "default": 32
         }
       ]
     }

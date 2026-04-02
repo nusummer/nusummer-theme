@@ -1,17 +1,72 @@
-<section class="panel section-wrap">
-  <h1>{{ section.settings.heading }}</h1>
-  <p>{{ section.settings.message }}</p>
-  <a class="btn" href="{{ routes.root_url }}">{{ section.settings.back_label }}</a>
+<section
+  class="panel section-wrap"
+  style="
+    background: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    text-align: {{ section.settings.text_align }};
+  "
+>
+  {% if section.settings.image != blank %}
+    <div style="margin-bottom: 24px;">
+      <img
+        src="{{ section.settings.image | image_url: width: 600 }}"
+        alt=""
+        style="max-width: {{ section.settings.image_max_width }}px; width: 100%; border-radius: {{ section.settings.image_border_radius }}px;"
+      >
+    </div>
+  {% endif %}
+
+  <h1 style="color: {{ section.settings.heading_color }}; font-size: {{ section.settings.heading_size }}px;">
+    {{ section.settings.heading }}
+  </h1>
+
+  <p style="color: {{ section.settings.text_color }};">{{ section.settings.message }}</p>
+
+  <a class="btn" href="{{ routes.root_url }}" style="background: {{ section.settings.btn_bg_color }}; color: {{ section.settings.btn_text_color }};">
+    {{ section.settings.back_label }}
+  </a>
+
+  {% if section.settings.show_search %}
+    <div style="margin-top: 24px;">
+      <form action="{{ routes.search_url }}" method="get" style="display: flex; gap: 8px; justify-content: {{ section.settings.text_align }};">
+        <input type="text" name="q" placeholder="{{ section.settings.search_placeholder }}" style="padding: 8px 12px; border: 1px solid #ccc; flex: 1; max-width: 360px;">
+        <button class="btn" type="submit">{{ section.settings.search_label }}</button>
+      </form>
+    </div>
+  {% endif %}
 </section>
+
 {% schema %}
 {
   "name": "404 page",
   "settings": [
     {
+      "type": "header",
+      "content": "Content"
+    },
+    {
       "type": "text",
       "id": "heading",
       "label": "Heading",
       "default": "Page not found"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading font size",
+      "min": 18,
+      "max": 56,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#0f172a"
     },
     {
       "type": "text",
@@ -22,8 +77,120 @@
     {
       "type": "text",
       "id": "back_label",
-      "label": "Back to home button label",
+      "label": "Button label",
       "default": "Back to home"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg_color",
+      "label": "Button background color",
+      "default": "#3b82f6"
+    },
+    {
+      "type": "color",
+      "id": "btn_text_color",
+      "label": "Button text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Optional image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "Optional image shown above the heading — could be a logo, illustration, or fun graphic."
+    },
+    {
+      "type": "range",
+      "id": "image_max_width",
+      "label": "Maximum image width",
+      "min": 80,
+      "max": 600,
+      "step": 20,
+      "unit": "px",
+      "default": 300
+    },
+    {
+      "type": "range",
+      "id": "image_border_radius",
+      "label": "Image corner roundness",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Search bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "Show search bar",
+      "default": false,
+      "info": "Lets visitors search for a product or page directly from the 404 page."
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder",
+      "label": "Search input placeholder text",
+      "default": "Search our store..."
+    },
+    {
+      "type": "text",
+      "id": "search_label",
+      "label": "Search button label",
+      "default": "Search"
+    },
+    {
+      "type": "header",
+      "content": "Section style"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#0f172a"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Content alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top (space above content)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom (space below content)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
     }
   ],
   "presets": [

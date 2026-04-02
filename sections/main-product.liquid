@@ -1,35 +1,232 @@
-<section class="panel section-wrap">
-  <div class="product-detail">
-    <div class="product-detail__media">
+{% assign img_side = section.settings.image_position %}
+
+<section
+  class="panel section-wrap"
+  style="
+    background: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div
+    class="product-detail"
+    style="{% if img_side == 'right' %}direction: rtl;{% endif %}"
+  >
+
+    <div class="product-detail__media" style="{% if img_side == 'right' %}direction: ltr;{% endif %}">
       {% if product.featured_image %}
-        <img src="{{ product.featured_image | image_url: width: 900 }}" alt="{{ product.featured_image.alt | escape }}">
+        <img
+          src="{{ product.featured_image | image_url: width: 900 }}"
+          alt="{{ product.featured_image.alt | escape }}"
+          style="
+            border-radius: {{ section.settings.image_border_radius }}px;
+            border: {{ section.settings.image_border_width }}px solid {{ section.settings.image_border_color }};
+          "
+        >
       {% endif %}
     </div>
-    <div class="product-detail__info">
-      <h1 class="product-detail__title">{{ product.title }}</h1>
-      <div class="product-detail__price">{{ product.price | money }}</div>
-      {% if section.settings.show_description %}
-        <div class="product-detail__description rte">{{ product.description }}</div>
+
+    <div class="product-detail__info" style="{% if img_side == 'right' %}direction: ltr;{% endif %}">
+      {% if section.settings.show_vendor and product.vendor != blank %}
+        <p class="small" style="color: {{ section.settings.text_color }}; margin: 0 0 6px; text-transform: uppercase; letter-spacing: .6px;">
+          {{ product.vendor }}
+        </p>
       {% endif %}
+
+      <h1 class="product-detail__title" style="color: {{ section.settings.title_color }}; font-size: {{ section.settings.title_size }}px;">
+        {{ product.title }}
+      </h1>
+
+      <div class="product-detail__price" style="color: {{ section.settings.price_color }};">
+        {{ product.price | money }}
+        {% if product.compare_at_price > product.price and section.settings.show_compare_price %}
+          <span style="text-decoration: line-through; font-weight: 400; color: {{ section.settings.text_color }}; font-size: 0.85em; margin-left: 8px;">
+            {{ product.compare_at_price | money }}
+          </span>
+        {% endif %}
+      </div>
+
+      {% if section.settings.show_description %}
+        <div class="product-detail__description rte" style="color: {{ section.settings.text_color }};">
+          {{ product.description }}
+        </div>
+      {% endif %}
+
+      {% if section.settings.show_sku and product.selected_or_first_available_variant.sku != blank %}
+        <p class="small" style="color: {{ section.settings.text_color }};">
+          SKU: {{ product.selected_or_first_available_variant.sku }}
+        </p>
+      {% endif %}
+
       <div class="product-detail__actions">
         {% form 'product', product %}
-          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-          <button class="btn" type="submit">{{ section.settings.add_to_cart_label }}</button>
+          {% if product.variants.size > 1 %}
+            <div style="margin-bottom: 12px;">
+              <label for="variant-select" style="display:block; margin-bottom:4px; font-weight:700;">
+                {{ section.settings.variant_label }}
+              </label>
+              <select id="variant-select" name="id" style="padding: 8px 12px; border: 1px solid #ccc; width: 100%;">
+                {% for variant in product.variants %}
+                  <option value="{{ variant.id }}" {% unless variant.available %}disabled{% endunless %}>
+                    {{ variant.title }}{% unless variant.available %} — {{ section.settings.sold_out_label }}{% endunless %}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+          {% else %}
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+          {% endif %}
+
+          <button class="btn" type="submit" style="background: {{ section.settings.btn_bg_color }}; color: {{ section.settings.btn_text_color }};">
+            {{ section.settings.add_to_cart_label }}
+          </button>
         {% endform %}
-        <a class="btn secondary" href="{{ routes.cart_url }}">{{ section.settings.checkout_label }}</a>
+
+        {% if section.settings.show_view_cart_button %}
+          <a class="btn secondary" href="{{ routes.cart_url }}">{{ section.settings.checkout_label }}</a>
+        {% endif %}
       </div>
+
+      {% if section.settings.extra_info != blank %}
+        <div class="small rte" style="margin-top: 16px; color: {{ section.settings.text_color }};">
+          {{ section.settings.extra_info }}
+        </div>
+      {% endif %}
     </div>
+
   </div>
 </section>
+
 {% schema %}
 {
   "name": "Product page",
   "settings": [
     {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Product image position",
+      "options": [
+        { "value": "left", "label": "Image on the left" },
+        { "value": "right", "label": "Image on the right" }
+      ],
+      "default": "left",
+      "info": "Controls whether the product image appears on the left or right side of the page."
+    },
+    {
+      "type": "header",
+      "content": "Product title"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title font size",
+      "min": 18,
+      "max": 52,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#0f172a"
+    },
+    {
+      "type": "header",
+      "content": "Product image"
+    },
+    {
+      "type": "range",
+      "id": "image_border_radius",
+      "label": "Image corner roundness",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 0,
+      "info": "0 = sharp corners, higher = more rounded."
+    },
+    {
+      "type": "range",
+      "id": "image_border_width",
+      "label": "Image border thickness",
+      "min": 0,
+      "max": 8,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "info": "Set to 0 to hide the border."
+    },
+    {
+      "type": "color",
+      "id": "image_border_color",
+      "label": "Image border color",
+      "default": "#c9d8fb"
+    },
+    {
+      "type": "header",
+      "content": "Product details"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show brand / vendor name",
+      "default": false,
+      "info": "Displays the brand name above the product title."
+    },
+    {
       "type": "checkbox",
       "id": "show_description",
       "label": "Show product description",
       "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_compare_price",
+      "label": "Show original / compare-at price",
+      "default": true,
+      "info": "Shows the original price crossed out when a product is on sale."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sku",
+      "label": "Show product SKU",
+      "default": false,
+      "info": "Shows the product's stock keeping unit number. Set this in Shopify admin → Products."
+    },
+    {
+      "type": "color",
+      "id": "price_color",
+      "label": "Price color",
+      "default": "#b91c1c"
+    },
+    {
+      "type": "header",
+      "content": "Variants (product options)"
+    },
+    {
+      "type": "text",
+      "id": "variant_label",
+      "label": "Variant selector label",
+      "default": "Choose an option",
+      "info": "Label shown above the dropdown when a product has multiple options (e.g. sizes, colors)."
+    },
+    {
+      "type": "text",
+      "id": "sold_out_label",
+      "label": "Sold out label",
+      "default": "Sold out",
+      "info": "Text appended to unavailable variants in the dropdown."
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
     },
     {
       "type": "text",
@@ -38,10 +235,74 @@
       "default": "Add to cart"
     },
     {
+      "type": "color",
+      "id": "btn_bg_color",
+      "label": "Add to cart button background color",
+      "default": "#3b82f6"
+    },
+    {
+      "type": "color",
+      "id": "btn_text_color",
+      "label": "Add to cart button text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_cart_button",
+      "label": "Show 'View cart' button",
+      "default": true
+    },
+    {
       "type": "text",
       "id": "checkout_label",
-      "label": "Checkout button label",
-      "default": "Checkout"
+      "label": "'View cart' button label",
+      "default": "View cart"
+    },
+    {
+      "type": "header",
+      "content": "Extra information"
+    },
+    {
+      "type": "richtext",
+      "id": "extra_info",
+      "label": "Extra info below buttons",
+      "info": "Optional text shown below the buttons — great for shipping notes, size guides, care instructions, etc. Leave blank to hide."
+    },
+    {
+      "type": "header",
+      "content": "Section style"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#334155"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top (space above content)",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom (space below content)",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 26
     }
   ],
   "presets": [

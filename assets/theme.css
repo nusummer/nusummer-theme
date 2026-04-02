@@ -109,3 +109,5 @@ a:hover{text-decoration:underline}
 .cart-table th,.cart-table td{text-align:left;padding:8px 4px;border-bottom:1px solid var(--edge)}
 .cart-table input[type=number]{width:60px;padding:4px}
 .cart-footer{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:16px}
+/* Mobile: always stack product grid to single column regardless of editor column setting */
+@media(max-width:600px){.product-grid{grid-template-columns:1fr!important}}

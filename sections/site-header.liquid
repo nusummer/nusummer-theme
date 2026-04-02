@@ -1,4 +1,10 @@
-<header class="site-header">
+<header
+  class="site-header"
+  style="
+    background: {{ section.settings.bg_color }};
+    border-bottom-color: {{ section.settings.border_color }};
+  "
+>
   <a class="logo-link" href="{{ routes.root_url }}">
     {% if section.settings.logo_image != blank %}
       <img
@@ -8,9 +14,10 @@
         style="height: {{ section.settings.logo_height }}px; width: auto;"
       >
     {% else %}
-      <div class="logo">{{ settings.logo_text }}</div>
+      <div class="logo" style="color: {{ section.settings.logo_color }};">{{ settings.logo_text }}</div>
     {% endif %}
   </a>
+
   <div class="header-right">
     {% if section.settings.show_flag %}
       <div class="flag" aria-label="United States flag" title="USA">
@@ -23,40 +30,113 @@
         </svg>
       </div>
     {% endif %}
-    <a class="checkout-pill" href="{{ routes.cart_url }}">{{ section.settings.checkout_label }}</a>
+
+    {% if section.settings.show_cart_button %}
+      <a
+        class="checkout-pill"
+        href="{{ routes.cart_url }}"
+        style="color: {{ section.settings.cart_text_color }}; background: {{ section.settings.cart_bg_color }};"
+      >
+        {{ section.settings.checkout_label }}
+        {% if section.settings.show_cart_count and cart.item_count > 0 %}
+          ({{ cart.item_count }})
+        {% endif %}
+      </a>
+    {% endif %}
   </div>
 </header>
+
 {% schema %}
 {
-  "name": "Site header",
+  "name": "Header",
   "settings": [
+    {
+      "type": "header",
+      "content": "Logo"
+    },
     {
       "type": "image_picker",
       "id": "logo_image",
       "label": "Logo image",
-      "info": "Replaces the logo text when set. PNG with transparent background recommended."
+      "info": "Upload your logo here. A PNG with a transparent background works best. If left blank, the logo text from Theme Settings → Brand will be used."
     },
     {
       "type": "range",
       "id": "logo_height",
       "label": "Logo image height",
       "min": 32,
-      "max": 100,
+      "max": 120,
       "step": 2,
       "unit": "px",
       "default": 60
     },
     {
+      "type": "color",
+      "id": "logo_color",
+      "label": "Logo text color",
+      "info": "Only applies when no logo image is uploaded.",
+      "default": "#2563eb"
+    },
+    {
+      "type": "header",
+      "content": "Header style"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Header background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Header bottom border color",
+      "default": "#dbe4ff"
+    },
+    {
+      "type": "header",
+      "content": "Cart button"
+    },
+    {
       "type": "checkbox",
-      "id": "show_flag",
-      "label": "Show USA flag",
+      "id": "show_cart_button",
+      "label": "Show cart / checkout button",
       "default": true
     },
     {
       "type": "text",
       "id": "checkout_label",
-      "label": "Checkout button label",
+      "label": "Button label",
       "default": "Checkout"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cart_count",
+      "label": "Show number of items in cart",
+      "default": true,
+      "info": "Displays the cart item count in brackets next to the button label."
+    },
+    {
+      "type": "color",
+      "id": "cart_bg_color",
+      "label": "Button background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "cart_text_color",
+      "label": "Button text color",
+      "default": "#0f172a"
+    },
+    {
+      "type": "header",
+      "content": "Extras"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_flag",
+      "label": "Show USA flag icon",
+      "default": true
     }
   ]
 }

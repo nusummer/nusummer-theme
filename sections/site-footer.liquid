@@ -1,53 +1,78 @@
-<footer class="footer">
+<footer
+  class="footer"
+  style="
+    background: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
   <div class="legal">
+
     {% if section.settings.show_notice %}
-      <h4>{{ section.settings.notice_heading }}</h4>
-      <div>{{ section.settings.notice_body }}</div>
+      <h4 style="color: {{ section.settings.heading_color }};">{{ section.settings.notice_heading }}</h4>
+      <div style="color: {{ section.settings.text_color }};">{{ section.settings.notice_body }}</div>
       {% if section.blocks.size > 0 %}
         <ul>
           {% for block in section.blocks %}
             {% if block.type == 'sds_link' and block.settings.label != blank and block.settings.url != blank %}
               <li {{ block.shopify_attributes }}>
-                <a href="{{ block.settings.url }}">{{ block.settings.label }}</a>
+                <a href="{{ block.settings.url }}" style="color: {{ section.settings.link_color }};">{{ block.settings.label }}</a>
               </li>
             {% endif %}
           {% endfor %}
         </ul>
       {% endif %}
     {% endif %}
-    <h4>{{ section.settings.general_heading }}</h4>
-    <p>&copy; <span id="year"></span> {{ shop.name }}. {{ section.settings.copyright_suffix }}</p>
+
+    {% if section.settings.show_general %}
+      <h4 style="color: {{ section.settings.heading_color }};">{{ section.settings.general_heading }}</h4>
+    {% endif %}
+
+    {% if section.settings.extra_links != blank %}
+      <p style="color: {{ section.settings.text_color }};">{{ section.settings.extra_links }}</p>
+    {% endif %}
+
+    <p style="color: {{ section.settings.text_color }};">&copy; <span id="year"></span> {{ shop.name }}. {{ section.settings.copyright_suffix }}</p>
   </div>
 </footer>
+
 {% schema %}
 {
-  "name": "Site footer",
+  "name": "Footer",
   "settings": [
     {
       "type": "header",
-      "content": "Legal notice"
+      "content": "Legal notice block"
     },
     {
       "type": "checkbox",
       "id": "show_notice",
       "label": "Show legal notice",
-      "default": true
+      "default": true,
+      "info": "Toggle this off to hide the legal / disclaimer section from your footer."
     },
     {
       "type": "text",
       "id": "notice_heading",
-      "label": "Notice heading",
+      "label": "Legal notice heading",
       "default": "Research Chemicals — Notice"
     },
     {
       "type": "richtext",
       "id": "notice_body",
-      "label": "Notice body",
+      "label": "Legal notice body text",
       "default": "<p>Products in the \"Research Chemicals\" category are supplied strictly for <strong>laboratory research use only</strong>. Not for human consumption, veterinary use, medical use, diagnostic use, or household use. Age verification and compliance checks may be required. Provide and review Safety Data Sheets (SDS) prior to handling.</p>"
     },
     {
       "type": "header",
-      "content": "General"
+      "content": "General section"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_general",
+      "label": "Show general heading",
+      "default": true
     },
     {
       "type": "text",
@@ -56,10 +81,68 @@
       "default": "General"
     },
     {
+      "type": "richtext",
+      "id": "extra_links",
+      "label": "Extra footer text or links",
+      "info": "Optional extra content below the heading — links, policies, etc. Leave blank to hide."
+    },
+    {
+      "type": "header",
+      "content": "Copyright"
+    },
+    {
       "type": "text",
       "id": "copyright_suffix",
-      "label": "Copyright suffix",
+      "label": "Copyright suffix text",
       "default": "All rights reserved."
+    },
+    {
+      "type": "header",
+      "content": "Footer style"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Footer background color",
+      "default": "#f6f9ff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#475569"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#0f172a"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link color",
+      "default": "#2563eb"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top (space above content)",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom (space below content)",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
     }
   ],
   "blocks": [
@@ -71,7 +154,8 @@
           "type": "text",
           "id": "label",
           "label": "Link label",
-          "default": "SDS: Document"
+          "default": "SDS: Document",
+          "info": "The text that appears for this link."
         },
         {
           "type": "url",
@@ -84,7 +168,7 @@
   ],
   "presets": [
     {
-      "name": "Site footer",
+      "name": "Footer",
       "blocks": [
         { "type": "sds_link", "settings": { "label": "SDS: Example Reagent A", "url": "/pages/sds-example-reagent-a" } },
         { "type": "sds_link", "settings": { "label": "SDS: Example Reagent B", "url": "/pages/sds-example-reagent-b" } }
