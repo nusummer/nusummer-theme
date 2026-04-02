@@ -16,6 +16,9 @@
     "color_accent": "#2063a2",
     "color_price": "#b02e27",
     "color_border": "#b02e27",
+    "btn_shape": "rounded",
+    "btn_radius": 10,
+    "btn_font_size": 13,
     "font_body": "\"Times New Roman\", Times, serif",
     "font_size_base": 16,
     "page_width": 980,
@@ -28,8 +31,15 @@
         "settings": {
           "logo_image": "shopify://shop_images/NU_logo_v2.png",
           "logo_height": 100,
-          "show_flag": true,
-          "checkout_label": "Checkout"
+          "logo_color": "#2563eb",
+          "bg_color": "#ffffff",
+          "border_color": "#dbe4ff",
+          "show_cart_button": true,
+          "checkout_label": "Checkout",
+          "show_cart_count": true,
+          "cart_bg_color": "#ffffff",
+          "cart_text_color": "#0f172a",
+          "show_flag": true
         }
       },
       "sidebar-nav": {
@@ -55,8 +65,13 @@
           "nav_link_CRxDF6"
         ],
         "settings": {
+          "aside_bg_color": "#f6f9ff",
+          "nav_bg_color": "#ffffff",
+          "link_color": "#2563eb",
           "show_status": true,
-          "status_text": ""
+          "status_text": "",
+          "status_bg_color": "#ffffff",
+          "status_text_color": "#0f172a"
         }
       },
       "site-footer": {
@@ -65,8 +80,36 @@
           "show_notice": true,
           "notice_heading": "Research Chemicals — Notice",
           "notice_body": "<p>Products in the \"Research Chemicals\" category are supplied strictly for <strong>laboratory research use only</strong>. Not for human consumption, veterinary use, medical use, diagnostic use, or household use. Age verification and compliance checks may be required. Provide and review Safety Data Sheets (SDS) prior to handling.</p>",
+          "show_general": true,
           "general_heading": "General",
-          "copyright_suffix": "All rights reserved."
+          "extra_links": "",
+          "copyright_suffix": "All rights reserved.",
+          "bg_color": "#f6f9ff",
+          "text_color": "#475569",
+          "heading_color": "#0f172a",
+          "link_color": "#2563eb",
+          "padding_top": 20,
+          "padding_bottom": 40
+        }
+      },
+      "announcement-bar": {
+        "type": "announcement-bar",
+        "settings": {
+          "show_bar": false,
+          "message": "Free shipping on orders over $50 — Shop now",
+          "emoji": "",
+          "message_url": "",
+          "underline_link": false,
+          "show_dismiss": true,
+          "font_size": 13,
+          "bold": false,
+          "letter_spacing": 0,
+          "text_align": "center",
+          "bg_color": "#0f172a",
+          "text_color": "#ffffff",
+          "border_color": "#1e293b",
+          "padding_v": 10,
+          "padding_h": 16
         }
       }
     },
