@@ -81,6 +81,12 @@
           <button class="btn" type="submit" style="background: {{ section.settings.btn_bg_color }}; color: {{ section.settings.btn_text_color }};">
             {{ section.settings.add_to_cart_label }}
           </button>
+
+          {% if section.settings.show_shop_pay %}
+            <div style="margin-top: 10px;">
+              {{ form | payment_button }}
+            </div>
+          {% endif %}
         {% endform %}
 
         {% if section.settings.show_view_cart_button %}
@@ -233,6 +239,13 @@
       "id": "add_to_cart_label",
       "label": "Add to cart button label",
       "default": "Add to cart"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_shop_pay",
+      "label": "Show Shop Pay / dynamic checkout button",
+      "default": true,
+      "info": "Displays the Shop Pay, Apple Pay, or Google Pay button below Add to cart. Requires the Shop app to be installed and payment methods enabled in your Shopify settings."
     },
     {
       "type": "color",

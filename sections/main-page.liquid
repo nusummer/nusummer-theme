@@ -265,6 +265,11 @@
                 {% form 'product', fp %}
                   <input type="hidden" name="id" value="{{ fp.selected_or_first_available_variant.id }}">
                   <button class="btn" type="submit">{{ block.settings.btn_label }}</button>
+                  {% if block.settings.show_shop_pay %}
+                    <div style="margin-top: 10px;">
+                      {{ form | payment_button }}
+                    </div>
+                  {% endif %}
                 {% endform %}
                 <a class="btn secondary" href="{{ fp.url }}" style="margin-left: 8px;">{{ block.settings.view_label }}</a>
               </div>
@@ -283,6 +288,11 @@
                 {% form 'product', fp %}
                   <input type="hidden" name="id" value="{{ fp.selected_or_first_available_variant.id }}">
                   <button class="btn" type="submit">{{ block.settings.btn_label }}</button>
+                  {% if block.settings.show_shop_pay %}
+                    <div style="margin-top: 10px;">
+                      {{ form | payment_button }}
+                    </div>
+                  {% endif %}
                 {% endform %}
                 <a class="btn secondary" href="{{ fp.url }}" style="margin-left: 8px;">{{ block.settings.view_label }}</a>
               </div>
@@ -1112,6 +1122,13 @@
           "id": "btn_label",
           "label": "Add to cart button label",
           "default": "Add to cart"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_shop_pay",
+          "label": "Show Shop Pay / dynamic checkout button",
+          "default": true,
+          "info": "Displays the Shop Pay, Apple Pay, or Google Pay button below Add to cart. Requires the Shop app to be installed and payment methods enabled in your Shopify settings."
         },
         {
           "type": "text",
