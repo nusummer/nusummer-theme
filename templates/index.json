@@ -1,1 +1,26 @@
-{"sections":{"main":{"type":"main-index","settings":{"heading":"","collection":"frontpage","products_limit":6,"empty_title":"Create products in Shopify","empty_message":"Then add them to the Frontpage collection to populate this home section."}},"main_product_QTtUe7":{"type":"main-product","name":"Product page","settings":{"show_description":true,"add_to_cart_label":"Add to cart","checkout_label":"Checkout"}}},"order":["main","main_product_QTtUe7"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-index",
+      "settings": {
+        "heading": "",
+        "collection": "frontpage",
+        "products_limit": 6,
+        "empty_title": "Create products in Shopify",
+        "empty_message": "Then add them to the Frontpage collection to populate this home section."
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
