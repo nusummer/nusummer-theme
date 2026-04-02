@@ -116,18 +116,7 @@
     {% section 'announcement-bar' %}
     <div class="page-width">
       {% section 'site-header' %}
-      <div
-        class="main-grid"
-        style="
-          {% if settings.sidebar_position == 'right' %}
-            grid-template-columns: 1fr {{ settings.sidebar_width }}px;
-          {% elsif settings.sidebar_position == 'hidden' %}
-            grid-template-columns: 1fr;
-          {% else %}
-            grid-template-columns: {{ settings.sidebar_width }}px 1fr;
-          {% endif %}
-        "
-      >
+      <div class="main-grid">
         {% unless settings.sidebar_position == 'hidden' %}
           {% if settings.sidebar_position == 'right' %}
             <main>{{ content_for_layout }}</main>
