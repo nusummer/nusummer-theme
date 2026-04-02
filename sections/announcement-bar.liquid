@@ -1,0 +1,188 @@
+{% if section.settings.show_bar %}
+  <div
+    id="announcement-bar"
+    style="
+      background: {{ section.settings.bg_color }};
+      color: {{ section.settings.text_color }};
+      text-align: {{ section.settings.text_align }};
+      font-size: {{ section.settings.font_size }}px;
+      padding: {{ section.settings.padding_v }}px {{ section.settings.padding_h }}px;
+      font-weight: {{ section.settings.bold ? '700' : '400' }};
+      letter-spacing: {{ section.settings.letter_spacing }}px;
+      position: relative;
+      border-bottom: 1px solid {{ section.settings.border_color }};
+    "
+  >
+    {% if section.settings.message_url != blank %}
+      <a href="{{ section.settings.message_url }}" style="color: {{ section.settings.text_color }}; text-decoration: {% if section.settings.underline_link %}underline{% else %}none{% endif %};">
+        {% if section.settings.emoji != blank %}{{ section.settings.emoji }}&nbsp;{% endif %}
+        {{ section.settings.message }}
+        {% if section.settings.emoji != blank %}&nbsp;{{ section.settings.emoji }}{% endif %}
+      </a>
+    {% else %}
+      {% if section.settings.emoji != blank %}{{ section.settings.emoji }}&nbsp;{% endif %}
+      {{ section.settings.message }}
+      {% if section.settings.emoji != blank %}&nbsp;{{ section.settings.emoji }}{% endif %}
+    {% endif %}
+
+    {% if section.settings.show_dismiss %}
+      <button
+        id="dismiss-bar"
+        onclick="document.getElementById('announcement-bar').style.display='none'"
+        style="
+          position: absolute;
+          right: 12px;
+          top: 50%;
+          transform: translateY(-50%);
+          background: none;
+          border: none;
+          cursor: pointer;
+          color: {{ section.settings.text_color }};
+          font-size: 16px;
+          line-height: 1;
+          padding: 4px 8px;
+          opacity: .6;
+        "
+        aria-label="Dismiss"
+      >✕</button>
+    {% endif %}
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Visibility"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_bar",
+      "label": "Show announcement bar",
+      "default": false,
+      "info": "Toggle this on to display the bar at the very top of every page."
+    },
+    {
+      "type": "header",
+      "content": "Message"
+    },
+    {
+      "type": "text",
+      "id": "message",
+      "label": "Announcement text",
+      "default": "Free shipping on orders over $50 — Shop now",
+      "info": "Keep it short and clear. This appears at the top of every page."
+    },
+    {
+      "type": "text",
+      "id": "emoji",
+      "label": "Emoji (optional)",
+      "info": "Add an emoji that appears on both sides of your message. Example: 🌊 or ✨. Leave blank for none."
+    },
+    {
+      "type": "url",
+      "id": "message_url",
+      "label": "Link URL (optional)",
+      "info": "Makes the whole announcement text clickable. Leave blank for no link."
+    },
+    {
+      "type": "checkbox",
+      "id": "underline_link",
+      "label": "Underline the link",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dismiss",
+      "label": "Show dismiss (✕) button",
+      "default": true,
+      "info": "Lets visitors close the bar by clicking the ✕."
+    },
+    {
+      "type": "header",
+      "content": "Text style"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Font size",
+      "min": 11,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "checkbox",
+      "id": "bold",
+      "label": "Bold text",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "letter_spacing",
+      "label": "Letter spacing",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Text alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Bar style"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#0f172a"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Bottom border color",
+      "default": "#1e293b"
+    },
+    {
+      "type": "range",
+      "id": "padding_v",
+      "label": "Vertical padding (height)",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "padding_h",
+      "label": "Horizontal padding",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    }
+  ]
+}
+{% endschema %}
