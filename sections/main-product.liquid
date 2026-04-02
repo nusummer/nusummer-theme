@@ -82,11 +82,9 @@
             {{ section.settings.add_to_cart_label }}
           </button>
 
-          {% if section.settings.show_shop_pay %}
-            <div style="margin-top: 10px;">
-              {{ form | payment_button }}
-            </div>
-          {% endif %}
+          <div style="margin-top: 10px;">
+            {{ form | payment_button }}
+          </div>
         {% endform %}
 
         {% if section.settings.show_view_cart_button %}
