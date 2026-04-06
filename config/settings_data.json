@@ -30,7 +30,7 @@
         "type": "site-header",
         "settings": {
           "logo_image": "shopify://shop_images/NU_logo_v2.png",
-          "logo_height": 100,
+          "logo_height": 120,
           "logo_color": "#2563eb",
           "bg_color": "#ffffff",
           "border_color": "#dbe4ff",
@@ -49,7 +49,7 @@
             "type": "nav_link",
             "settings": {
               "label": "Truckers n Shirts",
-              "url": ""
+              "url": "shopify://collections/all"
             }
           },
           "nav_link_CRxDF6": {
