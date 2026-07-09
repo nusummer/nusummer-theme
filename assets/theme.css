@@ -160,44 +160,38 @@ a:hover { text-decoration: underline; }
 .pagination { display: flex; gap: 8px; justify-content: center; margin: 20px 0 0; }
 .pagination span, .pagination a { padding: 6px 12px; }
 
-/* ── Wii bottom bar ────────────────────────────────────── */
-.wii-bottom-bar {
-  position: relative; height: 92px; margin-top: 40px; overflow: hidden;
-  background: linear-gradient(180deg, #eaeeef 0%, #cfd6d9 100%);
-  border-top: 2px solid #b9c1c5;
-  border-radius: 50% 50% 0 0 / 34px 34px 0 0;
-  box-shadow: inset 0 3px 0 rgba(255,255,255,.85);
+
+/* ── Airplane scene (footer tile) ──────────────────────── */
+.wii-runway-scene { max-width: var(--wrap, 980px); margin: 32px auto 4px; padding: 0 12px; pointer-events: none; line-height: 0; }
+.wii-scene-tile {
+  border-radius: 16px; overflow: hidden;
+  border: 2px solid var(--shadow-2, #8FAACA);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.95),
+    5px 5px 0 var(--shadow-1, #C1634A),
+    10px 10px 0 var(--shadow-2, #8FAACA);
+  margin-bottom: 14px;
 }
-.wii-bottom-bar::after {
-  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 5px;
-  border-radius: inherit; opacity: .85;
-  background: linear-gradient(90deg, transparent 0%, var(--accent, #2063A2) 35%, #bfe3ff 50%, var(--accent, #2063A2) 65%, transparent 100%);
-  background-size: 220% 100%;
-  animation: wii-flow 7s linear infinite;
+.wii-scene-tile svg { display: block; width: 100%; height: auto; }
+.wii-plane-g { animation: plane-bob 6s ease-in-out infinite; }
+@keyframes plane-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-7px); }
 }
-@keyframes wii-flow { from { background-position: 220% 0; } to { background-position: -120% 0; } }
-.wii-bar-button {
-  position: absolute; top: 50%; transform: translateY(-50%);
-  width: 58px; height: 58px; border-radius: 50%;
-  background: radial-gradient(circle at 35% 28%, #ffffff, #e2e7e9 55%, #c6cdd1);
-  border: 2px solid #aeb7bc;
-  box-shadow: inset 0 2px 2px rgba(255,255,255,.9), 0 2px 6px rgba(60,80,90,.25);
-}
-.wii-bar-button::after { content: ""; position: absolute; inset: 16px; border-radius: 50%; border: 3px solid var(--accent, #2063A2); opacity: .55; }
-.wii-bar-button.left { left: 26px; }
-.wii-bar-button.right { right: 26px; }
 
 /* ── Footer ────────────────────────────────────────────── */
-.footer { padding: 20px 12px 40px; color: #6b767c; font-size: 12px; background: #e6eaec; }
+.footer { margin-top: 0; padding: 20px 12px 40px; color: #6b767c; font-size: 12px; background: #e6eaec; }
 .footer .legal { max-width: var(--wrap, 980px); margin: 0 auto; }
 .footer h4 { margin: 16px 0 6px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--red, #B02E27); }
 .footer ul { margin: 0; padding-left: 18px; }
 .footer a { color: var(--accent, #2063A2); }
 
+
+
 /* ── Motion safety ─────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  .wii-bottom-bar::after, .wii-clock-time .wii-colon { animation: none; }
-  .card:hover, .btn:hover, .pill:hover { animation: none; }
+  .wii-clock-time .wii-colon { animation: none; }
+  .wii-plane-g,   .card:hover, .btn:hover, .pill:hover { animation: none; }
   .card:hover { box-shadow: 0 0 0 2px rgba(32,99,162,.45), 5px 5px 0 var(--shadow-1, #C1634A), 10px 10px 0 var(--shadow-2, #8FAACA); }
 }
 @media (max-width: 600px) {
