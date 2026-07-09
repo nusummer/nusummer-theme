@@ -1,44 +1,50 @@
 <header class="site-header">
-  <a class="logo-link" href="{{ routes.root_url }}">
-    {% if section.settings.logo_image != blank %}
-      <img
-        class="logo-img"
-        src="{{ section.settings.logo_image | image_url: width: 400 }}"
-        alt="{{ shop.name | escape }}"
-        width="{{ section.settings.logo_height | times: 2 }}"
-        height="{{ section.settings.logo_height }}"
-        style="height: {{ section.settings.logo_height }}px; width: auto;"
-      >
-    {% else %}
-      <span class="logo-text">{{ settings.logo_text | default: shop.name }}</span>
-    {% endif %}
-  </a>
+  <div class="site-header__top">
+    <a class="logo-link" href="{{ routes.root_url }}">
+      {% if section.settings.logo_image != blank %}
+        <img
+          class="logo-img"
+          src="{{ section.settings.logo_image | image_url: width: 400 }}"
+          alt="{{ shop.name | escape }}"
+          width="{{ section.settings.logo_height | times: 2 }}"
+          height="{{ section.settings.logo_height }}"
+          style="height: {{ section.settings.logo_height }}px; width: auto;"
+        >
+      {% else %}
+        <span class="logo-text">{{ settings.logo_text | default: shop.name }}</span>
+      {% endif %}
+    </a>
 
-  <div class="header-right">
-    {% if section.settings.show_clock %}
-      <div class="wii-clock" style="color: {{ section.settings.clock_color }};" aria-hidden="true">
-        <span class="wii-clock-time" id="wii-clock-time">--<span class="wii-colon">:</span>--</span>
-        <span class="wii-clock-date" id="wii-clock-date"></span>
-      </div>
-    {% endif %}
+    <div class="header-right">
+      {% if section.settings.show_clock %}
+        <div class="wii-clock" style="color: {{ section.settings.clock_color }};" aria-hidden="true">
+          <span class="wii-clock-time" id="wii-clock-time">--<span class="wii-colon">:</span>--</span>
+          <span class="wii-clock-date" id="wii-clock-date"></span>
+        </div>
+      {% endif %}
 
-    {% if section.settings.show_flag %}
-      <div class="flag" title="USA">
-        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path fill="#bd3d44" d="M0 0h640v480H0z"/>
-          <path fill="#fff" d="M0 55.4h640v55.4H0zm0 110.8h640v55.4H0zm0 110.8h640v55.4H0zm0 110.8h640V448H0z"/>
-          <path fill="#192f5d" d="M0 0h296v221.6H0z"/>
-        </svg>
-      </div>
-    {% endif %}
+      {% if section.settings.show_flag %}
+        <div class="flag" title="USA">
+          <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path fill="#bd3d44" d="M0 0h640v480H0z"/>
+            <path fill="#fff" d="M0 55.4h640v55.4H0zm0 110.8h640v55.4H0zm0 110.8h640v55.4H0zm0 110.8h640V448H0z"/>
+            <path fill="#192f5d" d="M0 0h296v221.6H0z"/>
+          </svg>
+        </div>
+      {% endif %}
 
-    {% if section.settings.show_cart_button %}
-      <a class="pill" href="{{ routes.cart_url }}">
-        {{ section.settings.cart_label }}
-        {% if cart.item_count > 0 %}({{ cart.item_count }}){% endif %}
-      </a>
-    {% endif %}
+      {% if section.settings.show_cart_button %}
+        <a class="pill" href="{{ routes.cart_url }}">
+          {{ section.settings.cart_label }}
+          {% if cart.item_count > 0 %}({{ cart.item_count }}){% endif %}
+        </a>
+      {% endif %}
+    </div>
   </div>
+
+  {% if section.settings.show_status and section.settings.status_text != blank %}
+    <p class="site-header__status"><em>{{ section.settings.status_text }}</em></p>
+  {% endif %}
 </header>
 
 {% schema %}
@@ -51,7 +57,9 @@
     { "type": "color", "id": "clock_color", "label": "Clock color", "default": "#9AA5AA" },
     { "type": "checkbox", "id": "show_flag", "label": "Show USA flag", "default": true },
     { "type": "checkbox", "id": "show_cart_button", "label": "Show cart button", "default": true },
-    { "type": "text", "id": "cart_label", "label": "Cart button label", "default": "Checkout" }
+    { "type": "text", "id": "cart_label", "label": "Cart button label", "default": "Checkout" },
+    { "type": "checkbox", "id": "show_status", "label": "Show status message", "default": true },
+    { "type": "text", "id": "status_text", "label": "Status message", "default": "This website is always under construction." }
   ]
 }
 {% endschema %}

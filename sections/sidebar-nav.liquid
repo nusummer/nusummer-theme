@@ -9,19 +9,12 @@
       <a class="pill" href="/products/5-alpha-dhp">Research Chemicals</a>
     {% endif %}
   </nav>
-
-  {% if section.settings.show_status and section.settings.status_text != blank %}
-    <div class="panel status-box"><h3><em>{{ section.settings.status_text }}</em></h3></div>
-  {% endif %}
 </aside>
 
 {% schema %}
 {
   "name": "Sidebar navigation",
-  "settings": [
-    { "type": "checkbox", "id": "show_status", "label": "Show status box", "default": true },
-    { "type": "text", "id": "status_text", "label": "Status text", "default": "This website is always under construction." }
-  ],
+  "settings": [],
   "blocks": [
     {
       "type": "nav_link",
