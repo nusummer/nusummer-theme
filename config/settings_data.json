@@ -1,0 +1,48 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "current": {
+    "color_text": "#C1634A",
+    "page_width": 980,
+    "enable_sounds": true,
+    "sections": {
+      "site-header": {
+        "type": "site-header",
+        "settings": {
+          "logo_image": "shopify://shop_images/NU_logo_v2.png",
+          "logo_height": 90,
+          "show_clock": true,
+          "clock_color": "#9aa5aa",
+          "show_flag": true,
+          "show_cart_button": true,
+          "cart_label": "Checkout"
+        }
+      },
+      "sidebar-nav": {
+        "type": "sidebar-nav",
+        "settings": {
+          "show_status": true,
+          "status_text": "This website is always under construction."
+        }
+      },
+      "site-footer": {
+        "type": "site-footer",
+        "settings": {
+          "show_wii_bar": true,
+          "show_notice": true,
+          "notice_heading": "Research Chemicals — Notice",
+          "notice_body": "<p>Products in the \"Research Chemicals\" category are supplied strictly for <strong>laboratory research use only</strong>. Not for human consumption, veterinary use, medical use, diagnostic use, or household use. Age verification and compliance checks may be required. Provide and review Safety Data Sheets (SDS) prior to handling.</p>",
+          "copyright_suffix": "All rights reserved."
+        }
+      }
+    },
+    "content_for_index": []
+  }
+}
