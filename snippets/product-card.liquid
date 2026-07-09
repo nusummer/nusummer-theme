@@ -1,19 +1,31 @@
+{% comment %} Renders a channel-tile product card. Accepts: product {% endcomment %}
 <article class="card">
-  <div class="card-media">
+  <a class="card-media" href="{{ product.url }}" tabindex="-1" aria-hidden="true">
     {% if product.featured_image %}
-      <img src="{{ product.featured_image | image_url: width: 900 }}" alt="{{ product.featured_image.alt | escape }}">
+      <img
+        src="{{ product.featured_image | image_url: width: 600 }}"
+        alt="{{ product.featured_image.alt | escape }}"
+        width="600"
+        height="450"
+        loading="lazy"
+      >
     {% endif %}
-  </div>
+  </a>
   <h3 class="card-title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
-  <div class="card-price">{{ product.price | money }}</div>
-  {% if show_description != false %}
-    <div class="card-body">{{ product.description | strip_html | truncate: 120 }}</div>
-  {% endif %}
+  <div class="card-price">
+    {{ product.price | money }}
+    {% if product.compare_at_price > product.price %}<s>{{ product.compare_at_price | money }}</s>{% endif %}
+  </div>
+  <div class="card-body">{{ product.description | strip_html | truncate: 110 }}</div>
   <div class="card-actions">
-    {% form 'product', product %}
-      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-      <button class="btn" type="submit">Add to cart</button>
-    {% endform %}
+    {% if product.available %}
+      {% form 'product', product %}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <button class="btn" type="submit">Add to cart</button>
+      {% endform %}
+    {% else %}
+      <span class="btn secondary" aria-disabled="true">Sold out</span>
+    {% endif %}
     <a class="btn secondary" href="{{ product.url }}">View</a>
   </div>
 </article>
