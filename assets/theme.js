@@ -57,6 +57,73 @@ document.addEventListener('DOMContentLoaded', function () {
     if (navigator.vibrate) navigator.vibrate(ms);
   };
 
+  // ── Product photo gallery ─────────────────────────────
+  var galleries = document.querySelectorAll('[data-product-gallery]');
+  for (var g = 0; g < galleries.length; g++) {
+    (function (gallery) {
+      var slides = Array.prototype.slice.call(gallery.querySelectorAll('[data-gallery-slide]'));
+      var thumbs = Array.prototype.slice.call(gallery.querySelectorAll('[data-gallery-thumb]'));
+      var prevBtn = gallery.querySelector('[data-gallery-prev]');
+      var nextBtn = gallery.querySelector('[data-gallery-next]');
+      var stage = gallery.querySelector('.product-gallery__stage');
+      var current = 0;
+
+      var indexForImageId = function (imageId) {
+        if (!imageId) return -1;
+        for (var i = 0; i < slides.length; i++) {
+          if (slides[i].getAttribute('data-image-id') === imageId) return i;
+        }
+        return -1;
+      };
+
+      var show = function (index) {
+        if (!slides.length) return;
+        if (index < 0) index = slides.length - 1;
+        if (index >= slides.length) index = 0;
+        current = index;
+        for (var i = 0; i < slides.length; i++) {
+          slides[i].hidden = i !== index;
+          slides[i].classList.toggle('is-active', i === index);
+        }
+        for (var j = 0; j < thumbs.length; j++) {
+          thumbs[j].classList.toggle('is-active', j === index);
+          thumbs[j].setAttribute('aria-selected', j === index ? 'true' : 'false');
+        }
+      };
+
+      thumbs.forEach(function (thumb, i) {
+        thumb.addEventListener('click', function () { show(i); });
+      });
+      if (prevBtn) prevBtn.addEventListener('click', function () { show(current - 1); });
+      if (nextBtn) nextBtn.addEventListener('click', function () { show(current + 1); });
+
+      // Swipe support
+      if (stage) {
+        var touchStartX = null;
+        stage.addEventListener('touchstart', function (e) {
+          touchStartX = e.changedTouches[0].clientX;
+        }, { passive: true });
+        stage.addEventListener('touchend', function (e) {
+          if (touchStartX === null) return;
+          var dx = e.changedTouches[0].clientX - touchStartX;
+          if (Math.abs(dx) > 40) show(current + (dx < 0 ? 1 : -1));
+          touchStartX = null;
+        }, { passive: true });
+      }
+
+      // Variant-image awareness: switch to the variant's photo when selected
+      var variantSelect = gallery.closest('.product-detail') &&
+        gallery.closest('.product-detail').querySelector('#variant-select');
+      if (variantSelect) {
+        variantSelect.addEventListener('change', function () {
+          var opt = variantSelect.options[variantSelect.selectedIndex];
+          var idx = indexForImageId(opt.getAttribute('data-image-id'));
+          if (idx > -1) show(idx);
+        });
+      }
+    })(galleries[g]);
+  }
+
   var HOVER_SEL = '.card, .btn, .pill';
   document.addEventListener('pointerover', function (e) {
     var el = e.target.closest && e.target.closest(HOVER_SEL);
