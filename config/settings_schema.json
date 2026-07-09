@@ -6,7 +6,7 @@
         "type": "color",
         "id": "color_background",
         "label": "Page background color",
-        "default": "#f6f9ff"
+        "default": "#eef1f2"
       },
       {
         "type": "color",
@@ -18,36 +18,36 @@
         "type": "color",
         "id": "color_text",
         "label": "Body text color",
-        "default": "#0f172a"
+        "default": "#4b555a"
       },
       {
         "type": "color",
         "id": "color_muted",
         "label": "Secondary / muted text color",
-        "default": "#475569"
+        "default": "#8a959b"
       },
       {
         "type": "color",
         "id": "color_accent",
         "label": "Accent color (links, highlights)",
-        "default": "#2563eb"
+        "default": "#2063A2"
       },
       {
         "type": "color",
         "id": "color_price",
         "label": "Price color",
-        "default": "#b91c1c"
+        "default": "#B02E27"
       },
       {
         "type": "color",
         "id": "color_border",
         "label": "Border / divider color",
-        "default": "#c9d8fb"
+        "default": "#8FAACA"
       }
     ]
   },
   {
-    "name": "Buttons \u2014 Primary",
+    "name": "Buttons — Primary",
     "settings": [
       {
         "type": "paragraph",
@@ -57,7 +57,7 @@
         "type": "color",
         "id": "btn_bg",
         "label": "Primary button background color",
-        "default": "#3b82f6"
+        "default": "#2063A2"
       },
       {
         "type": "color",
@@ -69,7 +69,7 @@
         "type": "color",
         "id": "btn_border",
         "label": "Primary button border color",
-        "default": "#2563eb"
+        "default": "#17527F"
       },
       {
         "type": "header",
@@ -97,7 +97,7 @@
             "label": "Pill (fully rounded)"
           }
         ],
-        "default": "angled",
+        "default": "pill",
         "info": "Controls the overall shape of every button on the site."
       },
       {
@@ -108,7 +108,7 @@
         "max": 32,
         "step": 2,
         "unit": "px",
-        "default": 0,
+        "default": 16,
         "info": "Only applies when shape is set to 'Rounded'. Higher = more rounded corners."
       },
       {
@@ -139,7 +139,7 @@
         "max": 48,
         "step": 2,
         "unit": "px",
-        "default": 14
+        "default": 18
       },
       {
         "type": "select",
@@ -159,7 +159,7 @@
             "label": "Normal"
           }
         ],
-        "default": "uppercase"
+        "default": "none"
       },
       {
         "type": "select",
@@ -184,7 +184,7 @@
     ]
   },
   {
-    "name": "Buttons \u2014 Secondary",
+    "name": "Buttons — Secondary",
     "settings": [
       {
         "type": "paragraph",
@@ -200,13 +200,13 @@
         "type": "color",
         "id": "btn2_text",
         "label": "Secondary button text color",
-        "default": "#0f172a"
+        "default": "#2063A2"
       },
       {
         "type": "color",
         "id": "btn2_border",
         "label": "Secondary button border color",
-        "default": "#c9d8fb"
+        "default": "#8FAACA"
       }
     ]
   },
@@ -228,14 +228,14 @@
         "type": "color",
         "id": "card_bg_bottom",
         "label": "Card background color (bottom)",
-        "default": "#eef4ff",
+        "default": "#eef2f4",
         "info": "...to this color at the bottom."
       },
       {
         "type": "color",
         "id": "card_border_color",
         "label": "Card / panel border color",
-        "default": "#c9d8fb"
+        "default": "#8FAACA"
       },
       {
         "type": "range",
@@ -245,7 +245,7 @@
         "max": 4,
         "step": 1,
         "unit": "px",
-        "default": 1
+        "default": 2
       },
       {
         "type": "range",
@@ -255,7 +255,7 @@
         "max": 24,
         "step": 2,
         "unit": "px",
-        "default": 0,
+        "default": 16,
         "info": "Note: when set above 0, the angled shape is removed and replaced with rounded corners."
       },
       {
@@ -284,7 +284,7 @@
             "label": "Duotone offset (brand colors)"
           }
         ],
-        "default": "subtle"
+        "default": "duotone"
       }
     ]
   },
@@ -341,7 +341,7 @@
         "max": 20,
         "step": 1,
         "default": 16,
-        "info": "This is a multiplier \u2014 16 means 1.6\u00d7 the font size, which is comfortable for reading."
+        "info": "This is a multiplier — 16 means 1.6× the font size, which is comfortable for reading."
       },
       {
         "type": "range",
