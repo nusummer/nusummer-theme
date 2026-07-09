@@ -19,6 +19,12 @@
   </a>
 
   <div class="header-right">
+    {% if section.settings.show_clock %}
+      <div class="wii-clock" style="color: {{ section.settings.clock_color }};" aria-hidden="true">
+        <span class="wii-clock-time" id="wii-clock-time">--<span class="wii-colon">:</span>--</span>
+        <span class="wii-clock-date" id="wii-clock-date"></span>
+      </div>
+    {% endif %}
     {% if section.settings.show_flag %}
       <div class="flag" aria-label="United States flag" title="USA">
         <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -131,6 +137,19 @@
     {
       "type": "header",
       "content": "Extras"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_clock",
+      "label": "Show menu-style clock",
+      "default": true,
+      "info": "Displays the visitor's local time and date in the header, styled like a certain 2006 console menu."
+    },
+    {
+      "type": "color",
+      "id": "clock_color",
+      "label": "Clock color",
+      "default": "#9aa5aa"
     },
     {
       "type": "checkbox",

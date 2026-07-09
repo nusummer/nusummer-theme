@@ -1,3 +1,10 @@
+{% if section.settings.show_wii_bar %}
+  <div class="wii-bottom-bar" style="--bar-accent: {{ section.settings.wii_bar_accent }};" aria-hidden="true">
+    <div class="wii-bar-button left"></div>
+    <div class="wii-bar-button right"></div>
+  </div>
+{% endif %}
+
 <footer
   class="footer"
   style="
@@ -41,6 +48,23 @@
 {
   "name": "Footer",
   "settings": [
+    {
+      "type": "header",
+      "content": "Menu-style bottom bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_wii_bar",
+      "label": "Show curved bottom bar",
+      "default": true,
+      "info": "Decorative curved gray bar with an animated accent stripe, shown above the footer."
+    },
+    {
+      "type": "color",
+      "id": "wii_bar_accent",
+      "label": "Bottom bar accent color",
+      "default": "#4dd2ff"
+    },
     {
       "type": "header",
       "content": "Legal notice block"
