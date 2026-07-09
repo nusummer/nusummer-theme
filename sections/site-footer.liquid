@@ -11,10 +11,26 @@
         </linearGradient>
       </defs>
       <rect x="0" y="0" width="1200" height="306" fill="url(#pl-skybg)"/>
+
+      <!-- Memphis pyramid: powder-blue faces matching the arch -->
+      <g stroke-linejoin="round">
+        <polygon points="975,168 878,306 998,306" fill="#b8cfdf" stroke="#7e9cb2" stroke-width="3"/>
+        <polygon points="975,168 998,306 1072,306" fill="#8fb0c6" stroke="#7e9cb2" stroke-width="3"/>
+        <g stroke="#ffffff" stroke-width="1.4" opacity=".35">
+          <line x1="936" y1="224" x2="1023" y2="224"/>
+          <line x1="916" y1="252" x2="1044" y2="252"/>
+          <line x1="897" y1="280" x2="1061" y2="280"/>
+        </g>
+        <line x1="975" y1="168" x2="998" y2="306" stroke="#7e9cb2" stroke-width="2.5"/>
+      </g>
+
+      <!-- Gateway arch (image), left leg overlapping the pyramid -->
+      <image href="{{ 'arch.webp' | asset_url }}" x="1002" y="128" width="163" height="178" preserveAspectRatio="xMidYMax meet"/>
+
       <rect x="0" y="298" width="1200" height="8" fill="#cfe6f4"/>
       <rect x="0" y="304" width="1200" height="26" fill="url(#pl-ocean)"/>
       <g class="wii-plane-g">
-        <image href="{{ 'airplane.webp' | asset_url }}" x="330" y="72" width="540" height="172" preserveAspectRatio="xMidYMid meet"/>
+        <image href="{{ 'airplane.webp' | asset_url }}" x="300" y="72" width="540" height="172" preserveAspectRatio="xMidYMid meet"/>
       </g>
     </svg>
   </div>
