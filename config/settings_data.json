@@ -17,10 +17,10 @@
         "type": "site-header",
         "settings": {
           "logo_image": "shopify://shop_images/NU_logo_v2.png",
-          "logo_height": 90,
+          "logo_height": 100,
           "show_clock": true,
           "clock_color": "#9aa5aa",
-          "show_flag": true,
+          "show_flag": false,
           "show_cart_button": true,
           "cart_label": "Checkout"
         }
@@ -35,7 +35,7 @@
       "site-footer": {
         "type": "site-footer",
         "settings": {
-          "show_wii_bar": true,
+          "show_plane": true,
           "show_notice": true,
           "notice_heading": "Research Chemicals — Notice",
           "notice_body": "<p>Products in the \"Research Chemicals\" category are supplied strictly for <strong>laboratory research use only</strong>. Not for human consumption, veterinary use, medical use, diagnostic use, or household use. Age verification and compliance checks may be required. Provide and review Safety Data Sheets (SDS) prior to handling.</p>",
