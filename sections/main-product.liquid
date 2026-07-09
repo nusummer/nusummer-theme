@@ -1,7 +1,47 @@
 <section class="panel">
   <div class="product-detail">
     <div class="product-detail__media">
-      {% if product.featured_image %}
+      {% assign images = product.images %}
+      {% if images.size > 1 %}
+        <div class="product-gallery" data-product-gallery>
+          <div class="product-gallery__stage">
+            <button type="button" class="product-gallery__arrow product-gallery__arrow--prev" data-gallery-prev aria-label="Previous photo">‹</button>
+            <div class="product-gallery__main">
+              {% for image in images %}
+                <img
+                  src="{{ image | image_url: width: 900 }}"
+                  srcset="{{ image | image_url: width: 600 }} 600w, {{ image | image_url: width: 900 }} 900w, {{ image | image_url: width: 1200 }} 1200w"
+                  sizes="(max-width: 640px) 100vw, 450px"
+                  alt="{{ image.alt | default: product.title | escape }}"
+                  width="900"
+                  height="900"
+                  class="product-gallery__slide{% if forloop.first %} is-active{% endif %}"
+                  data-gallery-slide
+                  data-image-id="{{ image.id }}"
+                  {% unless forloop.first %}hidden{% endunless %}
+                  loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                >
+              {% endfor %}
+            </div>
+            <button type="button" class="product-gallery__arrow product-gallery__arrow--next" data-gallery-next aria-label="Next photo">›</button>
+          </div>
+          <div class="product-gallery__thumbs" role="tablist" aria-label="Product photos">
+            {% for image in images %}
+              <button
+                type="button"
+                class="product-gallery__thumb{% if forloop.first %} is-active{% endif %}"
+                data-gallery-thumb
+                data-image-id="{{ image.id }}"
+                role="tab"
+                aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+                aria-label="Show photo {{ forloop.index }} of {{ forloop.length }}"
+              >
+                <img src="{{ image | image_url: width: 160 }}" alt="" width="72" height="72" loading="lazy">
+              </button>
+            {% endfor %}
+          </div>
+        </div>
+      {% elsif product.featured_image %}
         <img
           src="{{ product.featured_image | image_url: width: 900 }}"
           alt="{{ product.featured_image.alt | escape }}"
@@ -36,6 +76,7 @@
             {% for variant in product.variants %}
               <option
                 value="{{ variant.id }}"
+                data-image-id="{{ variant.featured_image.id }}"
                 {% if variant == product.selected_or_first_available_variant %}selected{% endif %}
                 {% unless variant.available %}disabled{% endunless %}
               >
