@@ -1,615 +1,77 @@
-{% assign img_side = section.settings.image_position %}
-
-<section
-  class="panel section-wrap"
-  style="
-    background: {{ section.settings.bg_color }};
-    color: {{ section.settings.text_color }};
-    padding-top: {{ section.settings.padding_top }}px;
-    padding-bottom: {{ section.settings.padding_bottom }}px;
-  "
->
-  <div class="product-detail" style="{% if img_side == 'right' %}direction: rtl;{% endif %}">
-
-    {%- comment -%} ── Product image ── {%- endcomment -%}
-    <div class="product-detail__media" style="{% if img_side == 'right' %}direction: ltr;{% endif %}">
+<section class="panel">
+  <div class="product-detail">
+    <div class="product-detail__media">
       {% if product.featured_image %}
         <img
           src="{{ product.featured_image | image_url: width: 900 }}"
           alt="{{ product.featured_image.alt | escape }}"
-          style="
-            border-radius: {{ section.settings.image_border_radius }}px;
-            border: {{ section.settings.image_border_width }}px solid {{ section.settings.image_border_color }};
-          "
+          width="900"
+          height="900"
         >
       {% endif %}
     </div>
 
-    {%- comment -%} ── Product info blocks ── {%- endcomment -%}
-    <div class="product-detail__info" style="{% if img_side == 'right' %}direction: ltr;{% endif %}">
+    <div class="product-detail__info">
+      {% if section.settings.show_vendor and product.vendor != blank %}
+        <p class="product-detail__vendor">{{ product.vendor }}</p>
+      {% endif %}
+
+      <h1 class="product-detail__title">{{ product.title }}</h1>
+
+      <div class="product-detail__price">
+        <span id="product-price">{{ product.selected_or_first_available_variant.price | money }}</span>
+        {% if product.compare_at_price > product.price %}
+          <s>{{ product.compare_at_price | money }}</s>
+        {% endif %}
+      </div>
+
+      {% if product.description != blank %}
+        <div class="product-detail__description">{{ product.description }}</div>
+      {% endif %}
 
       {% form 'product', product %}
-
-        {% for block in section.blocks %}
-          {% case block.type %}
-
-            {% when 'vendor' %}
-              {% if product.vendor != blank %}
-                <p
-                  class="small"
-                  style="margin: 0 0 {{ block.settings.spacing_bottom }}px; text-transform: uppercase; letter-spacing: .6px; color: {{ block.settings.color }};"
-                  {{ block.shopify_attributes }}
-                >
-                  {{ product.vendor }}
-                </p>
-              {% endif %}
-
-            {% when 'title' %}
-              <h1
-                class="product-detail__title"
-                style="font-size: {{ block.settings.font_size }}px; color: {{ block.settings.color }}; margin: 0 0 {{ block.settings.spacing_bottom }}px;"
-                {{ block.shopify_attributes }}
+        {% if product.variants.size > 1 %}
+          <label class="visually-hidden" for="variant-select">Variant</label>
+          <select class="variant-select" id="variant-select" name="id">
+            {% for variant in product.variants %}
+              <option
+                value="{{ variant.id }}"
+                {% if variant == product.selected_or_first_available_variant %}selected{% endif %}
+                {% unless variant.available %}disabled{% endunless %}
               >
-                {{ product.title }}
-              </h1>
+                {{ variant.title }} — {{ variant.price | money }}{% unless variant.available %} (sold out){% endunless %}
+              </option>
+            {% endfor %}
+          </select>
+        {% else %}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        {% endif %}
 
-            {% when 'price' %}
-              <div
-                class="product-detail__price"
-                style="color: {{ block.settings.price_color }}; font-size: {{ block.settings.font_size }}px; font-weight: 800; margin: 0 0 {{ block.settings.spacing_bottom }}px;"
-                {{ block.shopify_attributes }}
-              >
-                {{ product.price | money }}
-                {% if product.compare_at_price > product.price and block.settings.show_compare_price %}
-                  <span style="text-decoration: line-through; font-weight: 400; color: {{ block.settings.compare_color }}; font-size: 0.85em; margin-left: 8px;">
-                    {{ product.compare_at_price | money }}
-                  </span>
-                {% endif %}
-              </div>
+        <label class="visually-hidden" for="qty">Quantity</label>
+        <input class="qty-input" id="qty" type="number" name="quantity" min="1" value="1">
 
-            {% when 'description' %}
-              {% if product.description != blank %}
-                <div
-                  class="product-detail__description rte"
-                  style="color: {{ block.settings.color }}; font-size: {{ block.settings.font_size }}px; margin: 0 0 {{ block.settings.spacing_bottom }}px;"
-                  {{ block.shopify_attributes }}
-                >
-                  {{ product.description }}
-                </div>
-              {% endif %}
-
-            {% when 'variant_picker' %}
-              {% if product.variants.size > 1 %}
-                <div style="margin-bottom: {{ block.settings.spacing_bottom }}px;" {{ block.shopify_attributes }}>
-                  <label
-                    for="variant-select"
-                    style="display: block; margin-bottom: 6px; font-weight: 700; color: {{ block.settings.label_color }};"
-                  >
-                    {{ block.settings.label }}
-                  </label>
-                  <select
-                    id="variant-select"
-                    name="id"
-                    style="
-                      padding: 8px 12px;
-                      border: 1px solid {{ block.settings.border_color }};
-                      border-radius: {{ block.settings.border_radius }}px;
-                      width: 100%;
-                      background: {{ block.settings.bg_color }};
-                      color: {{ block.settings.text_color }};
-                      font-size: {{ block.settings.font_size }}px;
-                    "
-                  >
-                    {% for variant in product.variants %}
-                      <option value="{{ variant.id }}" {% unless variant.available %}disabled{% endunless %}>
-                        {{ variant.title }}{% unless variant.available %} — {{ block.settings.sold_out_label }}{% endunless %}
-                      </option>
-                    {% endfor %}
-                  </select>
-                </div>
-              {% else %}
-                <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-              {% endif %}
-
-            {% when 'buy_buttons' %}
-              <div
-                class="product-detail__actions"
-                style="margin-bottom: {{ block.settings.spacing_bottom }}px;"
-                {{ block.shopify_attributes }}
-              >
-                <button
-                  class="btn"
-                  type="submit"
-                  style="background: {{ block.settings.btn_bg_color }}; color: {{ block.settings.btn_text_color }}; width: {% if block.settings.full_width %}100%{% else %}auto{% endif %};"
-                >
-                  {{ block.settings.add_to_cart_label }}
-                </button>
-
-                {% if block.settings.show_view_cart %}
-                  <a
-                    class="btn secondary"
-                    href="{{ routes.cart_url }}"
-                    style="{% if block.settings.full_width %}display:block; margin-top: 8px; text-align:center;{% else %}margin-left: 8px;{% endif %}"
-                  >
-                    {{ block.settings.view_cart_label }}
-                  </a>
-                {% endif %}
-
-                {% if block.settings.show_payment_button %}
-                  <div style="margin-top: 12px; {% if block.settings.full_width %}width: 100%;{% endif %}">
-                    {{ form | payment_button }}
-                  </div>
-                {% endif %}
-              </div>
-
-            {% when 'sku' %}
-              {% if product.selected_or_first_available_variant.sku != blank %}
-                <p
-                  class="small"
-                  style="color: {{ block.settings.color }}; margin: 0 0 {{ block.settings.spacing_bottom }}px;"
-                  {{ block.shopify_attributes }}
-                >
-                  {{ block.settings.label }}: {{ product.selected_or_first_available_variant.sku }}
-                </p>
-              {% endif %}
-
-            {% when 'custom_text' %}
-              {% if block.settings.content != blank %}
-                <div
-                  class="rte small"
-                  style="color: {{ block.settings.color }}; font-size: {{ block.settings.font_size }}px; margin: 0 0 {{ block.settings.spacing_bottom }}px;"
-                  {{ block.shopify_attributes }}
-                >
-                  {{ block.settings.content }}
-                </div>
-              {% endif %}
-
-            {% when 'divider' %}
-              <hr
-                style="
-                  border: none;
-                  border-top: {{ block.settings.thickness }}px solid {{ block.settings.color }};
-                  margin: {{ block.settings.spacing }}px 0;
-                "
-                {{ block.shopify_attributes }}
-              >
-
-            {% when 'spacer' %}
-              <div style="height: {{ block.settings.height }}px;" {{ block.shopify_attributes }}></div>
-
-          {% endcase %}
-        {% endfor %}
-
+        <div>
+          {% if product.available %}
+            <button class="btn" type="submit">{{ section.settings.add_label }}</button>
+          {% else %}
+            <button class="btn secondary" type="button" disabled>Sold out</button>
+          {% endif %}
+          {% if section.settings.show_payment_button %}
+            {{ form | payment_button }}
+          {% endif %}
+        </div>
       {% endform %}
     </div>
-
   </div>
 </section>
 
 {% schema %}
 {
-  "name": "Product page",
+  "name": "Product",
   "settings": [
-    {
-      "type": "header",
-      "content": "Layout"
-    },
-    {
-      "type": "select",
-      "id": "image_position",
-      "label": "Product image position",
-      "options": [
-        { "value": "left", "label": "Image on the left" },
-        { "value": "right", "label": "Image on the right" }
-      ],
-      "default": "left"
-    },
-    {
-      "type": "header",
-      "content": "Product image style"
-    },
-    {
-      "type": "range",
-      "id": "image_border_radius",
-      "label": "Image corner roundness",
-      "min": 0,
-      "max": 24,
-      "step": 2,
-      "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "range",
-      "id": "image_border_width",
-      "label": "Image border thickness",
-      "min": 0,
-      "max": 8,
-      "step": 1,
-      "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "color",
-      "id": "image_border_color",
-      "label": "Image border color",
-      "default": "#c9d8fb"
-    },
-    {
-      "type": "header",
-      "content": "Section style"
-    },
-    {
-      "type": "color",
-      "id": "bg_color",
-      "label": "Section background color",
-      "default": "#ffffff"
-    },
-    {
-      "type": "color",
-      "id": "text_color",
-      "label": "Text color",
-      "default": "#334155"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "label": "Padding top",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "default": 22
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "label": "Padding bottom",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "default": 26
-    }
-  ],
-  "blocks": [
-    {
-      "type": "vendor",
-      "name": "Brand / vendor",
-      "settings": [
-        {
-          "type": "color",
-          "id": "color",
-          "label": "Text color",
-          "default": "#475569"
-        },
-        {
-          "type": "range",
-          "id": "spacing_bottom",
-          "label": "Space below",
-          "min": 0, "max": 40, "step": 4, "unit": "px", "default": 8
-        }
-      ]
-    },
-    {
-      "type": "title",
-      "name": "Product title",
-      "settings": [
-        {
-          "type": "range",
-          "id": "font_size",
-          "label": "Font size",
-          "min": 18, "max": 52, "step": 2, "unit": "px", "default": 24
-        },
-        {
-          "type": "color",
-          "id": "color",
-          "label": "Title color",
-          "default": "#0f172a"
-        },
-        {
-          "type": "range",
-          "id": "spacing_bottom",
-          "label": "Space below",
-          "min": 0, "max": 40, "step": 4, "unit": "px", "default": 8
-        }
-      ]
-    },
-    {
-      "type": "price",
-      "name": "Price",
-      "settings": [
-        {
-          "type": "range",
-          "id": "font_size",
-          "label": "Font size",
-          "min": 14, "max": 36, "step": 2, "unit": "px", "default": 20
-        },
-        {
-          "type": "color",
-          "id": "price_color",
-          "label": "Price color",
-          "default": "#b91c1c"
-        },
-        {
-          "type": "checkbox",
-          "id": "show_compare_price",
-          "label": "Show original / compare-at price",
-          "default": true,
-          "info": "Shows the original price crossed out when the product is on sale."
-        },
-        {
-          "type": "color",
-          "id": "compare_color",
-          "label": "Compare-at price color",
-          "default": "#94a3b8"
-        },
-        {
-          "type": "range",
-          "id": "spacing_bottom",
-          "label": "Space below",
-          "min": 0, "max": 40, "step": 4, "unit": "px", "default": 12
-        }
-      ]
-    },
-    {
-      "type": "description",
-      "name": "Product description",
-      "settings": [
-        {
-          "type": "range",
-          "id": "font_size",
-          "label": "Font size",
-          "min": 12, "max": 22, "step": 1, "unit": "px", "default": 16
-        },
-        {
-          "type": "color",
-          "id": "color",
-          "label": "Text color",
-          "default": "#334155"
-        },
-        {
-          "type": "range",
-          "id": "spacing_bottom",
-          "label": "Space below",
-          "min": 0, "max": 40, "step": 4, "unit": "px", "default": 16
-        }
-      ]
-    },
-    {
-      "type": "variant_picker",
-      "name": "Variant picker (size / color options)",
-      "settings": [
-        {
-          "type": "text",
-          "id": "label",
-          "label": "Dropdown label",
-          "default": "Choose an option",
-          "info": "Text shown above the dropdown. Only appears when a product has multiple options."
-        },
-        {
-          "type": "text",
-          "id": "sold_out_label",
-          "label": "Sold out label",
-          "default": "Sold out"
-        },
-        {
-          "type": "range",
-          "id": "font_size",
-          "label": "Font size",
-          "min": 12, "max": 20, "step": 1, "unit": "px", "default": 15
-        },
-        {
-          "type": "color",
-          "id": "label_color",
-          "label": "Label color",
-          "default": "#0f172a"
-        },
-        {
-          "type": "color",
-          "id": "text_color",
-          "label": "Dropdown text color",
-          "default": "#0f172a"
-        },
-        {
-          "type": "color",
-          "id": "bg_color",
-          "label": "Dropdown background color",
-          "default": "#ffffff"
-        },
-        {
-          "type": "color",
-          "id": "border_color",
-          "label": "Dropdown border color",
-          "default": "#c9d8fb"
-        },
-        {
-          "type": "range",
-          "id": "border_radius",
-          "label": "Dropdown corner roundness",
-          "min": 0, "max": 16, "step": 2, "unit": "px", "default": 4
-        },
-        {
-          "type": "range",
-          "id": "spacing_bottom",
-          "label": "Space below",
-          "min": 0, "max": 40, "step": 4, "unit": "px", "default": 16
-        }
-      ]
-    },
-    {
-      "type": "buy_buttons",
-      "name": "Buy buttons",
-      "settings": [
-        {
-          "type": "header",
-          "content": "Add to cart button"
-        },
-        {
-          "type": "text",
-          "id": "add_to_cart_label",
-          "label": "Button label",
-          "default": "Add to cart"
-        },
-        {
-          "type": "color",
-          "id": "btn_bg_color",
-          "label": "Button background color",
-          "default": "#3b82f6"
-        },
-        {
-          "type": "color",
-          "id": "btn_text_color",
-          "label": "Button text color",
-          "default": "#ffffff"
-        },
-        {
-          "type": "checkbox",
-          "id": "full_width",
-          "label": "Full width buttons",
-          "default": false,
-          "info": "Makes all buttons stretch to fill the full width."
-        },
-        {
-          "type": "header",
-          "content": "Dynamic checkout button (Shop Pay)"
-        },
-        {
-          "type": "checkbox",
-          "id": "show_payment_button",
-          "label": "Show dynamic checkout button",
-          "default": true,
-          "info": "Displays the Shop Pay, Apple Pay, or Google Pay button directly below Add to cart. To activate: go to Shopify Admin → Settings → Payments → Shopify Payments → Manage, and enable Shop Pay."
-        },
-        {
-          "type": "header",
-          "content": "View cart button"
-        },
-        {
-          "type": "checkbox",
-          "id": "show_view_cart",
-          "label": "Show 'View cart' button",
-          "default": true
-        },
-        {
-          "type": "text",
-          "id": "view_cart_label",
-          "label": "'View cart' button label",
-          "default": "View cart"
-        },
-        {
-          "type": "range",
-          "id": "spacing_bottom",
-          "label": "Space below",
-          "min": 0, "max": 40, "step": 4, "unit": "px", "default": 8
-        }
-      ]
-    },
-    {
-      "type": "sku",
-      "name": "SKU number",
-      "settings": [
-        {
-          "type": "text",
-          "id": "label",
-          "label": "Label",
-          "default": "SKU",
-          "info": "Shown before the SKU number. Example: 'SKU' displays as 'SKU: ABC123'."
-        },
-        {
-          "type": "color",
-          "id": "color",
-          "label": "Text color",
-          "default": "#475569"
-        },
-        {
-          "type": "range",
-          "id": "spacing_bottom",
-          "label": "Space below",
-          "min": 0, "max": 40, "step": 4, "unit": "px", "default": 8
-        }
-      ]
-    },
-    {
-      "type": "custom_text",
-      "name": "Custom text",
-      "settings": [
-        {
-          "type": "richtext",
-          "id": "content",
-          "label": "Content",
-          "default": "<p>Add any extra information here — shipping notes, size guides, care instructions, etc.</p>"
-        },
-        {
-          "type": "range",
-          "id": "font_size",
-          "label": "Font size",
-          "min": 11, "max": 20, "step": 1, "unit": "px", "default": 14
-        },
-        {
-          "type": "color",
-          "id": "color",
-          "label": "Text color",
-          "default": "#475569"
-        },
-        {
-          "type": "range",
-          "id": "spacing_bottom",
-          "label": "Space below",
-          "min": 0, "max": 40, "step": 4, "unit": "px", "default": 8
-        }
-      ]
-    },
-    {
-      "type": "divider",
-      "name": "Divider line",
-      "settings": [
-        {
-          "type": "color",
-          "id": "color",
-          "label": "Line color",
-          "default": "#dbe4ff"
-        },
-        {
-          "type": "range",
-          "id": "thickness",
-          "label": "Line thickness",
-          "min": 1, "max": 8, "step": 1, "unit": "px", "default": 1
-        },
-        {
-          "type": "range",
-          "id": "spacing",
-          "label": "Space above and below",
-          "min": 4, "max": 48, "step": 4, "unit": "px", "default": 16
-        }
-      ]
-    },
-    {
-      "type": "spacer",
-      "name": "Spacer",
-      "settings": [
-        {
-          "type": "range",
-          "id": "height",
-          "label": "Height",
-          "min": 4, "max": 80, "step": 4, "unit": "px", "default": 16
-        }
-      ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "Product page",
-      "blocks": [
-        { "type": "vendor" },
-        { "type": "title" },
-        { "type": "price" },
-        { "type": "divider" },
-        { "type": "description" },
-        { "type": "variant_picker" },
-        { "type": "buy_buttons" },
-        { "type": "custom_text" }
-      ]
-    }
+    { "type": "checkbox", "id": "show_vendor", "label": "Show vendor", "default": false },
+    { "type": "text", "id": "add_label", "label": "Add to cart label", "default": "Add to cart" },
+    { "type": "checkbox", "id": "show_payment_button", "label": "Show dynamic checkout button", "default": true }
   ]
 }
 {% endschema %}

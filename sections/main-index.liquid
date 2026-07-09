@@ -1,219 +1,36 @@
-{% assign col_setting = section.settings.columns %}
-{% if col_setting == '2' %}
-  {% assign grid_cols = 'repeat(2, 1fr)' %}
-{% elsif col_setting == '3' %}
-  {% assign grid_cols = 'repeat(3, 1fr)' %}
-{% elsif col_setting == '4' %}
-  {% assign grid_cols = 'repeat(4, 1fr)' %}
-{% else %}
-  {% assign grid_cols = 'repeat(auto-fit, minmax(240px, 1fr))' %}
-{% endif %}
-
-<section
-  class="panel section-wrap"
-  style="
-    background: {{ section.settings.bg_color }};
-    color: {{ section.settings.text_color }};
-    padding-top: {{ section.settings.padding_top }}px;
-    padding-bottom: {{ section.settings.padding_bottom }}px;
-  "
->
+<section class="panel">
   {% if section.settings.heading != blank %}
-    <h2 style="color: {{ section.settings.heading_color }}; font-size: {{ section.settings.heading_size }}px; margin-bottom: {{ section.settings.heading_spacing }}px;">
-      {{ section.settings.heading }}
-    </h2>
+    <h2 class="section-heading">{{ section.settings.heading }}</h2>
   {% endif %}
 
-  {% if section.settings.subheading != blank %}
-    <p style="color: {{ section.settings.text_color }}; margin-top: 0; margin-bottom: 16px;">
-      {{ section.settings.subheading }}
-    </p>
-  {% endif %}
-
-  <div class="product-grid" style="grid-template-columns: {{ grid_cols }}; gap: {{ section.settings.grid_gap }}px;">
-    {% assign featured_collection = collections[section.settings.collection] %}
-    {% if featured_collection and featured_collection.products_count > 0 %}
-      {% for product in featured_collection.products limit: section.settings.products_limit %}
+  {% assign featured = collections[section.settings.collection] %}
+  {% if featured != blank and featured.products_count > 0 %}
+    <div class="product-grid">
+      {% for product in featured.products limit: section.settings.products_limit %}
         {% render 'product-card', product: product %}
       {% endfor %}
-    {% else %}
-      <article class="card">
-        <div class="card-media"></div>
-        <h3 class="card-title">{{ section.settings.empty_title }}</h3>
-        <div class="card-body">{{ section.settings.empty_message }}</div>
-      </article>
-    {% endif %}
-  </div>
-
-  {% if section.settings.show_view_all and section.settings.collection != blank %}
-    <div style="text-align: center; margin-top: 24px;">
-      <a class="btn" href="{{ collections[section.settings.collection].url }}">
-        {{ section.settings.view_all_label }}
-      </a>
     </div>
+    {% if section.settings.show_view_all %}
+      <div style="text-align: center; margin-top: 24px;">
+        <a class="btn" href="{{ featured.url }}">{{ section.settings.view_all_label }}</a>
+      </div>
+    {% endif %}
+  {% else %}
+    <p class="small">{{ section.settings.empty_message }}</p>
   {% endif %}
 </section>
 
 {% schema %}
 {
-  "name": "Home — featured products",
+  "name": "Featured products",
   "settings": [
-    {
-      "type": "header",
-      "content": "Section heading"
-    },
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Heading text",
-      "default": ":: Welcome",
-      "info": "Leave blank to hide the heading entirely."
-    },
-    {
-      "type": "range",
-      "id": "heading_size",
-      "label": "Heading font size",
-      "min": 16,
-      "max": 48,
-      "step": 2,
-      "unit": "px",
-      "default": 24
-    },
-    {
-      "type": "color",
-      "id": "heading_color",
-      "label": "Heading color",
-      "default": "#0f172a"
-    },
-    {
-      "type": "range",
-      "id": "heading_spacing",
-      "label": "Space below heading",
-      "min": 0,
-      "max": 48,
-      "step": 4,
-      "unit": "px",
-      "default": 16
-    },
-    {
-      "type": "textarea",
-      "id": "subheading",
-      "label": "Subheading / intro text",
-      "info": "Optional short description shown below the heading. Leave blank to hide."
-    },
-    {
-      "type": "header",
-      "content": "Products"
-    },
-    {
-      "type": "collection",
-      "id": "collection",
-      "label": "Collection to display",
-      "info": "Choose which collection's products appear here. Defaults to the built-in Frontpage collection if left blank."
-    },
-    {
-      "type": "range",
-      "id": "products_limit",
-      "label": "Number of products to show",
-      "min": 2,
-      "max": 24,
-      "step": 1,
-      "default": 6
-    },
-    {
-      "type": "select",
-      "id": "columns",
-      "label": "Number of columns",
-      "options": [
-        { "value": "auto", "label": "Auto (fills available space)" },
-        { "value": "2", "label": "2 columns" },
-        { "value": "3", "label": "3 columns" },
-        { "value": "4", "label": "4 columns" }
-      ],
-      "default": "auto",
-      "info": "On phones, columns always stack into a single column automatically."
-    },
-    {
-      "type": "range",
-      "id": "grid_gap",
-      "label": "Space between product cards",
-      "min": 4,
-      "max": 40,
-      "step": 2,
-      "unit": "px",
-      "default": 16
-    },
-    {
-      "type": "checkbox",
-      "id": "show_view_all",
-      "label": "Show 'View all' button",
-      "default": false,
-      "info": "Adds a button at the bottom linking to the full collection."
-    },
-    {
-      "type": "text",
-      "id": "view_all_label",
-      "label": "'View all' button label",
-      "default": "View all products"
-    },
-    {
-      "type": "header",
-      "content": "Section style"
-    },
-    {
-      "type": "color",
-      "id": "bg_color",
-      "label": "Section background color",
-      "default": "#ffffff"
-    },
-    {
-      "type": "color",
-      "id": "text_color",
-      "label": "Text color",
-      "default": "#0f172a"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "label": "Padding top (space above content)",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "default": 22
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "label": "Padding bottom (space below content)",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "default": 26
-    },
-    {
-      "type": "header",
-      "content": "Empty state",
-      "info": "Shown when no products are found in the selected collection."
-    },
-    {
-      "type": "text",
-      "id": "empty_title",
-      "label": "Placeholder card title",
-      "default": "Create products in Shopify"
-    },
-    {
-      "type": "textarea",
-      "id": "empty_message",
-      "label": "Placeholder card message",
-      "default": "Then add them to the Frontpage collection to populate this section."
-    }
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Featured" },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "products_limit", "label": "Products to show", "min": 2, "max": 12, "step": 1, "default": 6 },
+    { "type": "checkbox", "id": "show_view_all", "label": "Show view-all button", "default": true },
+    { "type": "text", "id": "view_all_label", "label": "View-all label", "default": "View all" },
+    { "type": "text", "id": "empty_message", "label": "Empty state message", "default": "Select a collection for this section in the theme editor." }
   ],
-  "presets": [
-    {
-      "name": "Featured products"
-    }
-  ]
+  "presets": [{ "name": "Featured products" }]
 }
 {% endschema %}

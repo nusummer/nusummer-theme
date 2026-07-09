@@ -1,46 +1,41 @@
-<header
-  class="site-header"
-  style="
-    background: {{ section.settings.bg_color }};
-    border-bottom-color: {{ section.settings.border_color }};
-  "
->
+<header class="site-header">
   <a class="logo-link" href="{{ routes.root_url }}">
     {% if section.settings.logo_image != blank %}
       <img
         class="logo-img"
-        src="{{ section.settings.logo_image | image_url: width: 300 }}"
-        alt="{{ shop.name }}"
+        src="{{ section.settings.logo_image | image_url: width: 400 }}"
+        alt="{{ shop.name | escape }}"
+        width="{{ section.settings.logo_height | times: 2 }}"
+        height="{{ section.settings.logo_height }}"
         style="height: {{ section.settings.logo_height }}px; width: auto;"
       >
     {% else %}
-      <div class="logo" style="color: {{ section.settings.logo_color }};">{{ settings.logo_text }}</div>
+      <span class="logo-text">{{ settings.logo_text | default: shop.name }}</span>
     {% endif %}
   </a>
 
   <div class="header-right">
+    {% if section.settings.show_clock %}
+      <div class="wii-clock" style="color: {{ section.settings.clock_color }};" aria-hidden="true">
+        <span class="wii-clock-time" id="wii-clock-time">--<span class="wii-colon">:</span>--</span>
+        <span class="wii-clock-date" id="wii-clock-date"></span>
+      </div>
+    {% endif %}
+
     {% if section.settings.show_flag %}
-      <div class="flag" aria-label="United States flag" title="USA">
+      <div class="flag" title="USA">
         <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <g fill-rule="evenodd" stroke-width="1pt">
-            <path fill="#bd3d44" d="M0 0h640v480H0z"/>
-            <path fill="#fff" d="M0 55.4h640v55.4H0zm0 110.8h640v55.4H0zm0 110.8h640v55.4H0zm0 110.8h640V448H0z"/>
-            <path fill="#192f5d" d="M0 0h296v221.6H0z"/>
-          </g>
+          <path fill="#bd3d44" d="M0 0h640v480H0z"/>
+          <path fill="#fff" d="M0 55.4h640v55.4H0zm0 110.8h640v55.4H0zm0 110.8h640v55.4H0zm0 110.8h640V448H0z"/>
+          <path fill="#192f5d" d="M0 0h296v221.6H0z"/>
         </svg>
       </div>
     {% endif %}
 
     {% if section.settings.show_cart_button %}
-      <a
-        class="checkout-pill"
-        href="{{ routes.cart_url }}"
-        style="color: {{ section.settings.cart_text_color }}; background: {{ section.settings.cart_bg_color }};"
-      >
-        {{ section.settings.checkout_label }}
-        {% if section.settings.show_cart_count and cart.item_count > 0 %}
-          ({{ cart.item_count }})
-        {% endif %}
+      <a class="pill" href="{{ routes.cart_url }}">
+        {{ section.settings.cart_label }}
+        {% if cart.item_count > 0 %}({{ cart.item_count }}){% endif %}
       </a>
     {% endif %}
   </div>
@@ -50,94 +45,13 @@
 {
   "name": "Header",
   "settings": [
-    {
-      "type": "header",
-      "content": "Logo"
-    },
-    {
-      "type": "image_picker",
-      "id": "logo_image",
-      "label": "Logo image",
-      "info": "Upload your logo here. A PNG with a transparent background works best. If left blank, the logo text from Theme Settings → Brand will be used."
-    },
-    {
-      "type": "range",
-      "id": "logo_height",
-      "label": "Logo image height",
-      "min": 32,
-      "max": 120,
-      "step": 2,
-      "unit": "px",
-      "default": 60
-    },
-    {
-      "type": "color",
-      "id": "logo_color",
-      "label": "Logo text color",
-      "info": "Only applies when no logo image is uploaded.",
-      "default": "#2563eb"
-    },
-    {
-      "type": "header",
-      "content": "Header style"
-    },
-    {
-      "type": "color",
-      "id": "bg_color",
-      "label": "Header background color",
-      "default": "#ffffff"
-    },
-    {
-      "type": "color",
-      "id": "border_color",
-      "label": "Header bottom border color",
-      "default": "#dbe4ff"
-    },
-    {
-      "type": "header",
-      "content": "Cart button"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_cart_button",
-      "label": "Show cart / checkout button",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "checkout_label",
-      "label": "Button label",
-      "default": "Checkout"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_cart_count",
-      "label": "Show number of items in cart",
-      "default": true,
-      "info": "Displays the cart item count in brackets next to the button label."
-    },
-    {
-      "type": "color",
-      "id": "cart_bg_color",
-      "label": "Button background color",
-      "default": "#ffffff"
-    },
-    {
-      "type": "color",
-      "id": "cart_text_color",
-      "label": "Button text color",
-      "default": "#0f172a"
-    },
-    {
-      "type": "header",
-      "content": "Extras"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_flag",
-      "label": "Show USA flag icon",
-      "default": true
-    }
+    { "type": "image_picker", "id": "logo_image", "label": "Logo image" },
+    { "type": "range", "id": "logo_height", "label": "Logo height", "min": 32, "max": 120, "step": 2, "unit": "px", "default": 90 },
+    { "type": "checkbox", "id": "show_clock", "label": "Show menu-style clock", "default": true },
+    { "type": "color", "id": "clock_color", "label": "Clock color", "default": "#9AA5AA" },
+    { "type": "checkbox", "id": "show_flag", "label": "Show USA flag", "default": true },
+    { "type": "checkbox", "id": "show_cart_button", "label": "Show cart button", "default": true },
+    { "type": "text", "id": "cart_label", "label": "Cart button label", "default": "Checkout" }
   ]
 }
 {% endschema %}
