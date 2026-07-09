@@ -1,8 +1,24 @@
-{% if section.settings.show_wii_bar %}
-  <div class="wii-bottom-bar" aria-hidden="true">
-    <div class="wii-bar-button left"></div>
-    <div class="wii-bar-button right"></div>
+{% if section.settings.show_plane %}
+<div class="wii-runway-scene" aria-hidden="true">
+  <div class="wii-scene-tile">
+    <svg viewBox="0 0 1200 330" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax slice">
+      <defs>
+        <linearGradient id="pl-skybg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#6fbceb"/><stop offset="1" stop-color="#d6eefc"/>
+        </linearGradient>
+        <linearGradient id="pl-ocean" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#14568a"/><stop offset="1" stop-color="#2b83bd"/>
+        </linearGradient>
+      </defs>
+      <rect x="0" y="0" width="1200" height="306" fill="url(#pl-skybg)"/>
+      <rect x="0" y="298" width="1200" height="8" fill="#cfe6f4"/>
+      <rect x="0" y="304" width="1200" height="26" fill="url(#pl-ocean)"/>
+      <g class="wii-plane-g">
+        <image href="{{ 'airplane.webp' | asset_url }}" x="330" y="72" width="540" height="172" preserveAspectRatio="xMidYMid meet"/>
+      </g>
+    </svg>
   </div>
+</div>
 {% endif %}
 
 <footer class="footer">
@@ -28,7 +44,7 @@
 {
   "name": "Footer",
   "settings": [
-    { "type": "checkbox", "id": "show_wii_bar", "label": "Show curved bottom bar", "default": true },
+    { "type": "checkbox", "id": "show_plane", "label": "Show airplane and runway above footer", "default": true },
     { "type": "checkbox", "id": "show_notice", "label": "Show legal notice", "default": true },
     { "type": "text", "id": "notice_heading", "label": "Notice heading", "default": "Research Chemicals — Notice" },
     {
