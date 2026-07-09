@@ -16,7 +16,7 @@
     "btn_padding_v": 10,
     "btn_padding_h": 18,
     "btn_text_transform": "none",
-    "btn_weight": 800,
+    "btn_weight": "800",
     "btn2_bg": "#ffffff",
     "btn2_text": "#2063A2",
     "btn2_border": "#8FAACA",
