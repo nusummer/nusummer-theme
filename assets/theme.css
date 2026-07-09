@@ -17,14 +17,18 @@ a:hover { text-decoration: underline; }
 
 /* ── Header ────────────────────────────────────────────── */
 .site-header {
-  position: relative; display: flex; align-items: center; gap: 16px;
-  justify-content: space-between; padding: 12px 6px 14px;
+  position: relative; padding: 12px 6px 14px;
   border-bottom: 2px solid #dde3e6;
 }
 .site-header::before {
   content: ""; position: absolute; inset: 0 0 auto 0; height: 58px;
   background: linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.4) 70%, transparent);
   pointer-events: none;
+}
+.site-header__top { position: relative; display: flex; align-items: center; gap: 16px; justify-content: space-between; }
+.site-header__status {
+  position: relative; margin: 6px 0 0; text-align: right;
+  font-style: italic; font-size: 13px; color: var(--text, #4b555a);
 }
 .logo-link { position: relative; display: flex; align-items: center; }
 .logo-text {
@@ -96,8 +100,6 @@ a:hover { text-decoration: underline; }
 /* ── Sidebar ───────────────────────────────────────────── */
 .sidebar-nav { display: flex; flex-direction: column; gap: 14px; padding: 16px; }
 .sidebar-nav .pill { padding: 13px 20px; text-align: center; font-style: italic; color: var(--accent, #2063A2); letter-spacing: .8px; }
-.status-box { padding: 18px; }
-.status-box em { color: var(--text, #4b555a); }
 
 /* ── Section headings ──────────────────────────────────── */
 .section-heading {
