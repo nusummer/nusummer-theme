@@ -1,351 +1,43 @@
 [
   {
+    "name": "theme_info",
+    "theme_name": "Nu Summer Wii",
+    "theme_version": "2.0.0",
+    "theme_author": "Nu Summer",
+    "theme_documentation_url": "https://github.com/nusummer/nusummer-theme",
+    "theme_support_url": "https://github.com/nusummer/nusummer-theme/issues"
+  },
+  {
     "name": "Colors",
     "settings": [
-      {
-        "type": "color",
-        "id": "color_background",
-        "label": "Page background color",
-        "default": "#f6f9ff"
-      },
-      {
-        "type": "color",
-        "id": "color_panel",
-        "label": "Panel / card background color",
-        "default": "#ffffff"
-      },
-      {
-        "type": "color",
-        "id": "color_text",
-        "label": "Body text color",
-        "default": "#0f172a"
-      },
-      {
-        "type": "color",
-        "id": "color_muted",
-        "label": "Secondary / muted text color",
-        "default": "#475569"
-      },
-      {
-        "type": "color",
-        "id": "color_accent",
-        "label": "Accent color (links, highlights)",
-        "default": "#2563eb"
-      },
-      {
-        "type": "color",
-        "id": "color_price",
-        "label": "Price color",
-        "default": "#b91c1c"
-      },
-      {
-        "type": "color",
-        "id": "color_border",
-        "label": "Border / divider color",
-        "default": "#c9d8fb"
-      }
-    ]
-  },
-  {
-    "name": "Buttons — Primary",
-    "settings": [
-      {
-        "type": "paragraph",
-        "content": "The primary button is used for main actions like 'Add to cart'. Changes here apply to every primary button across the whole site."
-      },
-      {
-        "type": "color",
-        "id": "btn_bg",
-        "label": "Primary button background color",
-        "default": "#3b82f6"
-      },
-      {
-        "type": "color",
-        "id": "btn_text",
-        "label": "Primary button text color",
-        "default": "#ffffff"
-      },
-      {
-        "type": "color",
-        "id": "btn_border",
-        "label": "Primary button border color",
-        "default": "#2563eb"
-      },
-      {
-        "type": "header",
-        "content": "Primary button shape & size"
-      },
-      {
-        "type": "select",
-        "id": "btn_shape",
-        "label": "Button shape",
-        "options": [
-          { "value": "angled", "label": "Angled (diagonal cut corners)" },
-          { "value": "straight", "label": "Straight (sharp square corners)" },
-          { "value": "rounded", "label": "Rounded (soft corners)" },
-          { "value": "pill", "label": "Pill (fully rounded)" }
-        ],
-        "default": "angled",
-        "info": "Controls the overall shape of every button on the site."
-      },
-      {
-        "type": "range",
-        "id": "btn_radius",
-        "label": "Corner roundness",
-        "min": 0,
-        "max": 32,
-        "step": 2,
-        "unit": "px",
-        "default": 0,
-        "info": "Only applies when shape is set to 'Rounded'. Higher = more rounded corners."
-      },
-      {
-        "type": "range",
-        "id": "btn_font_size",
-        "label": "Button text size",
-        "min": 11,
-        "max": 20,
-        "step": 1,
-        "unit": "px",
-        "default": 13
-      },
-      {
-        "type": "range",
-        "id": "btn_padding_v",
-        "label": "Button height padding (top & bottom)",
-        "min": 4,
-        "max": 28,
-        "step": 2,
-        "unit": "px",
-        "default": 10
-      },
-      {
-        "type": "range",
-        "id": "btn_padding_h",
-        "label": "Button width padding (left & right)",
-        "min": 8,
-        "max": 48,
-        "step": 2,
-        "unit": "px",
-        "default": 14
-      },
-      {
-        "type": "select",
-        "id": "btn_text_transform",
-        "label": "Button text style",
-        "options": [
-          { "value": "uppercase", "label": "ALL CAPS" },
-          { "value": "capitalize", "label": "Title Case" },
-          { "value": "none", "label": "Normal" }
-        ],
-        "default": "uppercase"
-      },
-      {
-        "type": "select",
-        "id": "btn_weight",
-        "label": "Button text weight",
-        "options": [
-          { "value": "400", "label": "Normal" },
-          { "value": "600", "label": "Semi-bold" },
-          { "value": "800", "label": "Bold" }
-        ],
-        "default": "800"
-      }
-    ]
-  },
-  {
-    "name": "Buttons — Secondary",
-    "settings": [
-      {
-        "type": "paragraph",
-        "content": "The secondary button is used for less important actions like 'View' or 'Continue shopping'. It shares the same shape and size as the primary button."
-      },
-      {
-        "type": "color",
-        "id": "btn2_bg",
-        "label": "Secondary button background color",
-        "default": "#ffffff"
-      },
-      {
-        "type": "color",
-        "id": "btn2_text",
-        "label": "Secondary button text color",
-        "default": "#0f172a"
-      },
-      {
-        "type": "color",
-        "id": "btn2_border",
-        "label": "Secondary button border color",
-        "default": "#c9d8fb"
-      }
-    ]
-  },
-  {
-    "name": "Cards & Panels",
-    "settings": [
-      {
-        "type": "paragraph",
-        "content": "Cards are the product tiles in your grid. Panels are the content sections on each page. These settings control their appearance globally."
-      },
-      {
-        "type": "color",
-        "id": "card_bg_top",
-        "label": "Card background color (top)",
-        "default": "#ffffff",
-        "info": "Cards use a subtle gradient from this color at the top..."
-      },
-      {
-        "type": "color",
-        "id": "card_bg_bottom",
-        "label": "Card background color (bottom)",
-        "default": "#eef4ff",
-        "info": "...to this color at the bottom."
-      },
-      {
-        "type": "color",
-        "id": "card_border_color",
-        "label": "Card / panel border color",
-        "default": "#c9d8fb"
-      },
-      {
-        "type": "range",
-        "id": "card_border_width",
-        "label": "Card / panel border thickness",
-        "min": 0,
-        "max": 4,
-        "step": 1,
-        "unit": "px",
-        "default": 1
-      },
-      {
-        "type": "range",
-        "id": "card_radius",
-        "label": "Card / panel corner roundness",
-        "min": 0,
-        "max": 24,
-        "step": 2,
-        "unit": "px",
-        "default": 0,
-        "info": "Note: when set above 0, the angled shape is removed and replaced with rounded corners."
-      },
-      {
-        "type": "select",
-        "id": "card_shadow",
-        "label": "Card shadow intensity",
-        "options": [
-          { "value": "none", "label": "No shadow" },
-          { "value": "subtle", "label": "Subtle" },
-          { "value": "medium", "label": "Medium" },
-          { "value": "strong", "label": "Strong" }
-        ],
-        "default": "subtle"
-      }
-    ]
-  },
-  {
-    "name": "Typography",
-    "settings": [
-      {
-        "type": "select",
-        "id": "font_body",
-        "label": "Body font",
-        "options": [
-          { "value": "\"Times New Roman\", Times, serif", "label": "Times New Roman (classic serif)" },
-          { "value": "Georgia, serif", "label": "Georgia (elegant serif)" },
-          { "value": "\"Palatino Linotype\", Palatino, serif", "label": "Palatino (literary serif)" },
-          { "value": "system-ui, -apple-system, sans-serif", "label": "System sans-serif (modern, clean)" },
-          { "value": "\"Helvetica Neue\", Helvetica, Arial, sans-serif", "label": "Helvetica (neutral sans-serif)" },
-          { "value": "\"Courier New\", Courier, monospace", "label": "Courier New (typewriter)" }
-        ],
-        "default": "\"Times New Roman\", Times, serif"
-      },
-      {
-        "type": "range",
-        "id": "font_size_base",
-        "label": "Base font size",
-        "min": 13,
-        "max": 22,
-        "step": 1,
-        "unit": "px",
-        "default": 16
-      },
-      {
-        "type": "range",
-        "id": "line_height",
-        "label": "Line height (spacing between lines)",
-        "min": 10,
-        "max": 20,
-        "step": 1,
-        "default": 16,
-        "info": "This is a multiplier — 16 means 1.6× the font size, which is comfortable for reading."
-      },
-      {
-        "type": "range",
-        "id": "letter_spacing",
-        "label": "Letter spacing",
-        "min": 0,
-        "max": 10,
-        "step": 1,
-        "default": 2,
-        "info": "Adds a little air between letters. 0 = tightly packed, 10 = very spaced out."
-      }
+      { "type": "color", "id": "accent_blue", "label": "Brand blue", "default": "#2063A2" },
+      { "type": "color", "id": "accent_red", "label": "Brand red (prices, footer headings)", "default": "#B02E27" },
+      { "type": "color", "id": "shadow_1", "label": "Tile shadow layer 1", "default": "#C1634A" },
+      { "type": "color", "id": "shadow_2", "label": "Tile shadow layer 2 (also tile border)", "default": "#8FAACA" },
+      { "type": "color", "id": "color_bg", "label": "Page background", "default": "#EEF1F2" },
+      { "type": "color", "id": "color_text", "label": "Body text", "default": "#4B555A" }
     ]
   },
   {
     "name": "Layout",
     "settings": [
-      {
-        "type": "range",
-        "id": "page_width",
-        "label": "Maximum page width",
-        "min": 800,
-        "max": 1400,
-        "step": 20,
-        "unit": "px",
-        "default": 980,
-        "info": "How wide the page content gets on large screens."
-      },
-      {
-        "type": "range",
-        "id": "sidebar_width",
-        "label": "Sidebar width",
-        "min": 160,
-        "max": 320,
-        "step": 10,
-        "unit": "px",
-        "default": 230
-      },
-      {
-        "type": "select",
-        "id": "sidebar_position",
-        "label": "Sidebar position",
-        "options": [
-          { "value": "left", "label": "Left (default)" },
-          { "value": "right", "label": "Right" },
-          { "value": "hidden", "label": "Hidden (full-width layout)" }
-        ],
-        "default": "left",
-        "info": "Choose where the sidebar navigation appears, or hide it for a full-width layout."
-      }
+      { "type": "range", "id": "page_width", "label": "Page width", "min": 900, "max": 1200, "step": 20, "unit": "px", "default": 980 },
+      { "type": "checkbox", "id": "show_sidebar", "label": "Show sidebar navigation", "default": true },
+      { "type": "range", "id": "sidebar_width", "label": "Sidebar width", "min": 180, "max": 280, "step": 10, "unit": "px", "default": 230 }
+    ]
+  },
+  {
+    "name": "Effects",
+    "settings": [
+      { "type": "paragraph", "content": "Menu sounds are short synthesized tones (original audio, not Nintendo's). Haptics use the device vibration API where supported. Both respect the visitor's reduced-motion preference." },
+      { "type": "checkbox", "id": "enable_sounds", "label": "Enable hover and click sounds", "default": true },
+      { "type": "checkbox", "id": "enable_haptics", "label": "Enable haptic feedback on mobile", "default": true }
     ]
   },
   {
     "name": "Brand",
     "settings": [
-      {
-        "type": "text",
-        "id": "logo_text",
-        "label": "Logo text",
-        "default": "Nu Summer",
-        "info": "Shown when no logo image is uploaded in the Header section."
-      },
-      {
-        "type": "text",
-        "id": "status_text",
-        "label": "Sidebar status message",
-        "default": "This website is always under construction.",
-        "info": "Shown in the status box at the bottom of the sidebar."
-      }
+      { "type": "text", "id": "logo_text", "label": "Logo text (used when no logo image is set)", "default": "Nu Summer" }
     ]
   }
 ]
