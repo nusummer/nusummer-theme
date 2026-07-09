@@ -12,9 +12,8 @@
         </a>
       {% endfor %}
     {% else %}
-      <a class="sidebar-link" href="{{ routes.root_url }}" style="color: {{ section.settings.link_color }};"><span>Home</span></a>
-      <a class="sidebar-link" href="/pages/about" style="color: {{ section.settings.link_color }};"><span>About</span></a>
-      <a class="sidebar-link" href="/pages/contact" style="color: {{ section.settings.link_color }};"><span>Contact</span></a>
+      <a class="sidebar-link" href="{{ routes.collections_url }}/all" style="color: {{ section.settings.link_color }};"><span>Truckers n Shirts</span></a>
+      <a class="sidebar-link" href="/products/5-alpha-dhp" style="color: {{ section.settings.link_color }};"><span>Research Chemicals</span></a>
     {% endif %}
   </nav>
 
@@ -42,7 +41,7 @@
       "type": "color",
       "id": "aside_bg_color",
       "label": "Outer sidebar background color",
-      "default": "#f6f9ff",
+      "default": "#eef1f2",
       "info": "The background color behind the whole sidebar column."
     },
     {
@@ -56,7 +55,7 @@
       "type": "color",
       "id": "link_color",
       "label": "Link text color",
-      "default": "#2563eb"
+      "default": "#2063A2"
     },
     {
       "type": "header",
@@ -113,9 +112,8 @@
     {
       "name": "Sidebar navigation",
       "blocks": [
-        { "type": "nav_link", "settings": { "label": "Home", "url": "/" } },
-        { "type": "nav_link", "settings": { "label": "About", "url": "/pages/about" } },
-        { "type": "nav_link", "settings": { "label": "Contact", "url": "/pages/contact" } }
+        { "type": "nav_link", "settings": { "label": "Truckers n Shirts", "url": "/collections/all" } },
+        { "type": "nav_link", "settings": { "label": "Research Chemicals", "url": "/products/5-alpha-dhp" } }
       ]
     }
   ]
