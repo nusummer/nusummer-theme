@@ -1,64 +1,6 @@
 {
   "sections": {
-    "main": {
-      "type": "main-product",
-      "blocks": {
-        "vendor": {
-          "type": "vendor",
-          "settings": {}
-        },
-        "title": {
-          "type": "title",
-          "settings": {}
-        },
-        "price": {
-          "type": "price",
-          "settings": {
-            "show_compare_price": true
-          }
-        },
-        "divider": {
-          "type": "divider",
-          "settings": {}
-        },
-        "description": {
-          "type": "description",
-          "settings": {}
-        },
-        "variant_picker": {
-          "type": "variant_picker",
-          "settings": {}
-        },
-        "buy_buttons": {
-          "type": "buy_buttons",
-          "settings": {
-            "add_to_cart_label": "Add to cart",
-            "show_payment_button": true,
-            "show_view_cart": true,
-            "view_cart_label": "View cart"
-          }
-        },
-        "custom_text": {
-          "type": "custom_text",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "vendor",
-        "title",
-        "price",
-        "divider",
-        "description",
-        "variant_picker",
-        "buy_buttons",
-        "custom_text"
-      ],
-      "settings": {
-        "image_position": "left"
-      }
-    }
+    "main": { "type": "main-product", "settings": {} }
   },
-  "order": [
-    "main"
-  ]
+  "order": ["main"]
 }

@@ -1,82 +1,13 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "main_page_H63cRF": {
-      "type": "main-page",
-      "blocks": {
-        "button_pQ6qc9": {
-          "type": "button",
-          "settings": {
-            "button_label": "As Seen on TV",
-            "button_url": "shopify://products/as-seen-on-tv-trucker-hat"
-          }
-        },
-        "button_LFDqMW": {
-          "type": "button",
-          "settings": {
-            "button_label": "Buy Trucker Hat",
-            "button_url": "shopify://products/as-seen-on-tv-trucker-hat"
-          }
-        },
-        "image_AmCyfA": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/IMG_6511.png",
-            "image_alt": "",
-            "caption": "",
-            "max_width": 800
-          }
-        },
-        "button_4pLft4": {
-          "type": "button",
-          "settings": {
-            "button_label": "Buy Trucker Hat",
-            "button_url": "shopify://products/as-seen-on-tv-trucker-hat"
-          }
-        },
-        "text_AJkhry": {
-          "type": "text",
-          "settings": {
-            "content": ""
-          }
-        }
-      },
-      "block_order": [
-        "button_pQ6qc9",
-        "button_LFDqMW",
-        "image_AmCyfA",
-        "button_4pLft4",
-        "text_AJkhry"
-      ],
-      "name": "Page content",
-      "settings": {
-        "show_title": true,
-        "page_heading": "",
-        "intro_text": "",
-        "show_page_content": true
-      }
-    },
     "main": {
       "type": "main-index",
       "settings": {
-        "heading": "",
+        "heading": "Featured",
         "collection": "frontpage",
-        "products_limit": 6,
-        "empty_title": "Create products in Shopify",
-        "empty_message": "Then add them to the Frontpage collection to populate this home section."
+        "products_limit": 6
       }
     }
   },
-  "order": [
-    "main_page_H63cRF",
-    "main"
-  ]
+  "order": ["main"]
 }
