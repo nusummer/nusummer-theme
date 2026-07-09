@@ -1,28 +1,30 @@
 <header class="site-header">
   <div class="site-header__top">
-    <a class="logo-link" href="{{ routes.root_url }}">
-      {% if section.settings.logo_image != blank %}
-        <img
-          class="logo-img"
-          src="{{ section.settings.logo_image | image_url: width: 400 }}"
-          alt="{{ shop.name | escape }}"
-          width="{{ section.settings.logo_height | times: 2 }}"
-          height="{{ section.settings.logo_height }}"
-          style="height: {{ section.settings.logo_height }}px; width: auto;"
-        >
-      {% else %}
-        <span class="logo-text">{{ settings.logo_text | default: shop.name }}</span>
-      {% endif %}
-    </a>
+    <div class="site-header__brand">
+      <a class="logo-link" href="{{ routes.root_url }}">
+        {% if section.settings.logo_image != blank %}
+          <img
+            class="logo-img"
+            src="{{ section.settings.logo_image | image_url: width: 400 }}"
+            alt="{{ shop.name | escape }}"
+            width="{{ section.settings.logo_height | times: 2 }}"
+            height="{{ section.settings.logo_height }}"
+            style="height: {{ section.settings.logo_height }}px; width: auto;"
+          >
+        {% else %}
+          <span class="logo-text">{{ settings.logo_text | default: shop.name }}</span>
+        {% endif %}
+      </a>
 
-    <div class="header-right">
       {% if section.settings.show_clock %}
         <div class="wii-clock" style="color: {{ section.settings.clock_color }};" aria-hidden="true">
           <span class="wii-clock-time" id="wii-clock-time">--<span class="wii-colon">:</span>--</span>
           <span class="wii-clock-date" id="wii-clock-date"></span>
         </div>
       {% endif %}
+    </div>
 
+    <div class="header-right">
       {% if section.settings.show_flag %}
         <div class="flag" title="USA">
           <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
