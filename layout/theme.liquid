@@ -1,135 +1,37 @@
 <!doctype html>
 <html lang="{{ request.locale.iso_code }}">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>{% if page_title %}{{ page_title }} | {% endif %}{{ shop.name }}</title>
-    <meta name="description" content="{{ page_description | escape }}">
-    {{ content_for_header }}
-    {{ 'theme.css' | asset_url | stylesheet_tag }}
-
-    <style>
-      {% comment %} ── Button shape logic ─────────────────────────────── {% endcomment %}
-      {% if settings.btn_shape == 'angled' %}
-        {% assign btn_clip = 'polygon(6% 0,100% 0,94% 100%,0 100%)' %}
-        {% assign btn_radius_val = '0px' %}
-      {% elsif settings.btn_shape == 'pill' %}
-        {% assign btn_clip = 'none' %}
-        {% assign btn_radius_val = '999px' %}
-      {% elsif settings.btn_shape == 'rounded' %}
-        {% assign btn_clip = 'none' %}
-        {% assign btn_radius_val = settings.btn_radius | append: 'px' %}
-      {% else %}
-        {% assign btn_clip = 'none' %}
-        {% assign btn_radius_val = '0px' %}
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{% if page_title %}{{ page_title }} | {% endif %}{{ shop.name }}</title>
+  <meta name="description" content="{{ page_description | escape }}">
+  <link rel="canonical" href="{{ canonical_url }}">
+  {{ content_for_header }}
+  <style>
+    :root {
+      --accent: {{ settings.accent_blue }};
+      --red: {{ settings.accent_red }};
+      --shadow-1: {{ settings.shadow_1 }};
+      --shadow-2: {{ settings.shadow_2 }};
+      --bg: {{ settings.color_bg }};
+      --text: {{ settings.color_text }};
+      --wrap: {{ settings.page_width }}px;
+      --sidebar: {{ settings.sidebar_width }}px;
+    }
+  </style>
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'theme.js' | asset_url }}" defer></script>
+</head>
+<body data-sounds="{{ settings.enable_sounds }}" data-haptics="{{ settings.enable_haptics }}">
+  <div class="page-width">
+    {% section 'site-header' %}
+    <div class="main-grid{% unless settings.show_sidebar %} no-sidebar{% endunless %}">
+      {% if settings.show_sidebar %}
+        {% section 'sidebar-nav' %}
       {% endif %}
-
-      {% comment %} ── Card shadow logic ──────────────────────────────── {% endcomment %}
-      {% if settings.card_shadow == 'none' %}
-        {% assign card_shadow_val = 'none' %}
-      {% elsif settings.card_shadow == 'medium' %}
-        {% assign card_shadow_val = 'inset 0 1px 0 rgba(255,255,255,.95), inset 0 -1px 0 rgba(0,0,0,.06), 0 4px 16px rgba(0,0,0,.10), 0 0 18px var(--red-glow)' %}
-      {% elsif settings.card_shadow == 'strong' %}
-        {% assign card_shadow_val = 'inset 0 1px 0 rgba(255,255,255,.95), inset 0 -1px 0 rgba(0,0,0,.10), 0 8px 32px rgba(0,0,0,.18), 0 0 24px var(--red-glow)' %}
-      {% else %}
-        {% assign card_shadow_val = 'inset 0 1px 0 rgba(255,255,255,.95), inset 0 -1px 0 rgba(0,0,0,.06), 0 1px 0 rgba(255,255,255,.85), 0 0 0 2px rgba(255,255,255,.7), 0 0 18px var(--red-glow)' %}
-      {% endif %}
-
-      {% comment %} ── Card shape logic ──────────────────────────────── {% endcomment %}
-      {% if settings.card_radius > 0 %}
-        {% assign card_clip_val = 'none' %}
-      {% else %}
-        {% assign card_clip_val = 'polygon(2.8% 0,100% 0,97.2% 100%,0 100%)' %}
-      {% endif %}
-
-      {% comment %} ── Sidebar layout ────────────────────────────────── {% endcomment %}
-      {% if settings.sidebar_position == 'right' %}
-        {% assign grid_layout = '1fr ' | append: settings.sidebar_width | append: 'px' %}
-      {% elsif settings.sidebar_position == 'hidden' %}
-        {% assign grid_layout = '1fr' %}
-      {% else %}
-        {% assign grid_layout = settings.sidebar_width | append: 'px 1fr' %}
-      {% endif %}
-
-      :root {
-        /* ── Global colors ─────────────────────────── */
-        --bg:      {{ settings.color_background }};
-        --panel:   {{ settings.color_panel }};
-        --text:    {{ settings.color_text }};
-        --muted:   {{ settings.color_muted }};
-        --accent:  {{ settings.color_accent }};
-        --blue:    {{ settings.color_accent }};
-        --price:   {{ settings.color_price }};
-        --edge:    {{ settings.color_border }};
-        --wrap:    {{ settings.page_width }}px;
-        --sidebar: {{ settings.sidebar_width }}px;
-
-        /* ── Primary button ────────────────────────── */
-        --btn-bg:          {{ settings.btn_bg }};
-        --btn-text:        {{ settings.btn_text }};
-        --btn-border:      {{ settings.btn_border }};
-        --btn-clip:        {{ btn_clip }};
-        --btn-radius:      {{ btn_radius_val }};
-        --btn-font-size:   {{ settings.btn_font_size }}px;
-        --btn-padding-v:   {{ settings.btn_padding_v }}px;
-        --btn-padding-h:   {{ settings.btn_padding_h }}px;
-        --btn-transform:   {{ settings.btn_text_transform }};
-        --btn-weight:      {{ settings.btn_weight }};
-
-        /* ── Secondary button ─────────────────────── */
-        --btn2-bg:     {{ settings.btn2_bg }};
-        --btn2-text:   {{ settings.btn2_text }};
-        --btn2-border: {{ settings.btn2_border }};
-
-        /* ── Cards & panels ───────────────────────── */
-        --card-bg-top:    {{ settings.card_bg_top }};
-        --card-bg-bottom: {{ settings.card_bg_bottom }};
-        --card-border:    {{ settings.card_border_color }};
-        --card-border-w:  {{ settings.card_border_width }}px;
-        --card-radius:    {{ settings.card_radius }}px;
-        --card-shadow:    {{ card_shadow_val }};
-        --card-clip:      {{ card_clip_val }};
-
-        /* ── Typography ───────────────────────────── */
-        --line-height:    {{ settings.line_height | divided_by: 10.0 }};
-        --letter-spacing: {{ settings.letter_spacing | divided_by: 100.0 }}em;
-
-        /* ── Sidebar layout ───────────────────────── */
-        --grid-layout: {{ grid_layout }};
-
-        /* ── Glow effects ─────────────────────────── */
-        --red-glow:  rgba(220,38,38,.10);
-        --blue-glow: rgba(59,130,246,.50);
-      }
-
-      body {
-        font-family: {{ settings.font_body }};
-        font-size: {{ settings.font_size_base }}px;
-        line-height: var(--line-height);
-        letter-spacing: var(--letter-spacing);
-      }
-    </style>
-
-    <script src="{{ 'theme.js' | asset_url }}" defer></script>
-  </head>
-  <body>
-    {% section 'announcement-bar' %}
-    <div class="page-width">
-      {% section 'site-header' %}
-      <div class="main-grid">
-        {% unless settings.sidebar_position == 'hidden' %}
-          {% if settings.sidebar_position == 'right' %}
-            <main>{{ content_for_layout }}</main>
-            {% section 'sidebar-nav' %}
-          {% else %}
-            {% section 'sidebar-nav' %}
-            <main>{{ content_for_layout }}</main>
-          {% endif %}
-        {% else %}
-          <main>{{ content_for_layout }}</main>
-        {% endunless %}
-      </div>
+      <main id="main">{{ content_for_layout }}</main>
     </div>
-    {% section 'site-footer' %}
-  </body>
+  </div>
+  {% section 'site-footer' %}
+</body>
 </html>
