@@ -3,43 +3,21 @@
     {% if section.blocks.size > 0 %}
       {% for block in section.blocks %}
         {% if block.settings.shape == 'benzene' %}
-          <a class="benzene-btn" href="{{ block.settings.url }}" {{ block.shopify_attributes }}>
-            <svg viewBox="0 0 200 100" preserveAspectRatio="none" aria-hidden="true">
-              <defs>
-                <linearGradient id="benz-{{ forloop.index }}" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#ffffff"/>
-                  <stop offset="1" stop-color="#e9eef0"/>
-                </linearGradient>
-              </defs>
-              <polygon points="50,4 150,4 196,50 150,96 50,96 4,50" fill="url(#benz-{{ forloop.index }})"/>
-              <g stroke="#2063A2" stroke-width="3" stroke-linecap="round">
-                <line x1="66" y1="4" x2="134" y2="4"/>
-                <line x1="157" y1="11" x2="189" y2="43"/>
-                <line x1="189" y1="57" x2="157" y2="89"/>
-                <line x1="134" y1="96" x2="66" y2="96"/>
-                <line x1="43" y1="89" x2="11" y2="57"/>
-                <line x1="11" y1="43" x2="43" y2="11"/>
-              </g>
-              <g stroke="#2063A2" stroke-width="2.4" stroke-linecap="round" opacity=".8">
-                <line x1="74" y1="13" x2="126" y2="13"/>
-                <line x1="176" y1="58" x2="152" y2="82"/>
-                <line x1="48" y1="82" x2="24" y2="58"/>
-              </g>
-              <g font-family="'Times New Roman', Times, serif" font-weight="700" font-size="14" fill="#B02E27" text-anchor="middle">
-                <text x="50" y="9">C</text><text x="150" y="9">C</text>
-                <text x="196" y="55">C</text><text x="150" y="101">C</text>
-                <text x="50" y="101">C</text><text x="4" y="55">C</text>
-              </g>
-            </svg>
-            <span class="label">{{ block.settings.label }}</span>
-          </a>
+          {% render 'nav-benzene', label: block.settings.label, url: block.settings.url %}
         {% else %}
           <a class="pill nav-btn" href="{{ block.settings.url }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
         {% endif %}
       {% endfor %}
     {% else %}
+      {% comment %}
+        This store has never had blocks added to this section (no settings_data.json
+        ships in this repo, so block data lives only in Shopify's DB and starts empty).
+        This fallback is what's actually rendering live — it must be visually complete,
+        not a simplified stand-in, so Research Chemicals renders via the same benzene
+        snippet used by the block path.
+      {% endcomment %}
       <a class="pill nav-btn" href="{{ routes.all_products_collection_url }}">Truckers n Shirts</a>
-      <a class="pill nav-btn" href="/products/5-alpha-dhp">Research Chemicals</a>
+      {% render 'nav-benzene', label: 'Research Chemicals', url: '/products/5-alpha-dhp' %}
     {% endif %}
   </nav>
 </aside>
@@ -59,6 +37,7 @@
           "type": "select",
           "id": "shape",
           "label": "Shape",
+          "info": "Only applies once you've added blocks here via \"Add block\" below — until then, this section shows its two built-in default links.",
           "options": [
             { "value": "pill", "label": "Pill" },
             { "value": "benzene", "label": "Benzene ring" }

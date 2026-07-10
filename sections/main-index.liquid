@@ -5,14 +5,14 @@
 
   {% assign featured = collections[section.settings.collection] %}
   {% if featured != blank and featured.products_count > 0 %}
-    <div class="product-grid">
+    <div class="product-grid home-featured">
       {% for product in featured.products limit: section.settings.products_limit %}
-        {% render 'product-card', product: product %}
+        {% render 'product-card', product: product, truncate: 70 %}
       {% endfor %}
     </div>
     {% if section.settings.show_view_all %}
       <div style="text-align: center; margin-top: 24px;">
-        <a class="btn" href="{{ featured.url }}">{{ section.settings.view_all_label }}</a>
+        <a class="btn" href="{{ section.settings.view_all_url | default: featured.url }}">{{ section.settings.view_all_label }}</a>
       </div>
     {% endif %}
   {% else %}
@@ -28,7 +28,8 @@
     { "type": "collection", "id": "collection", "label": "Collection" },
     { "type": "range", "id": "products_limit", "label": "Products to show", "min": 2, "max": 12, "step": 1, "default": 6 },
     { "type": "checkbox", "id": "show_view_all", "label": "Show view-all button", "default": true },
-    { "type": "text", "id": "view_all_label", "label": "View-all label", "default": "View all" },
+    { "type": "text", "id": "view_all_label", "label": "View-all label", "default": "Shop" },
+    { "type": "url", "id": "view_all_url", "label": "View-all link", "info": "Defaults to the collection page if left blank." },
     { "type": "text", "id": "empty_message", "label": "Empty state message", "default": "Select a collection for this section in the theme editor." }
   ],
   "presets": [{ "name": "Featured products" }]

@@ -5,9 +5,19 @@
   {% endif %}
 
   {% paginate collection.products by section.settings.products_per_page %}
+    {% comment %}
+      Oldest-first ordering: sort only sees products within the current
+      paginate page, so products_per_page is raised to 50 (default below)
+      to keep the whole catalog on one page for this to sort correctly.
+      If the catalog grows past that, this per-page sort will stop being
+      accurate past page 1 — set the collection's own sort order in
+      Shopify admin (Products > Collections) to "Oldest to newest" instead,
+      which has no such limit and would let this comment block be removed.
+    {% endcomment %}
+    {% assign sorted_products = collection.products | sort: 'created_at' %}
     {% if collection.products_count > 0 %}
       <div class="product-grid">
-        {% for product in collection.products %}
+        {% for product in sorted_products %}
           {% render 'product-card', product: product %}
         {% endfor %}
       </div>
@@ -24,7 +34,7 @@
 {
   "name": "Collection products",
   "settings": [
-    { "type": "range", "id": "products_per_page", "label": "Products per page", "min": 4, "max": 24, "step": 2, "default": 12 }
+    { "type": "range", "id": "products_per_page", "label": "Products per page", "info": "Raised to keep oldest-first sorting accurate across the whole catalog (sorting only sees products on the current page).", "min": 4, "max": 50, "step": 2, "default": 50 }
   ]
 }
 {% endschema %}
