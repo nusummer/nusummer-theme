@@ -9,20 +9,39 @@ document.addEventListener('DOMContentLoaded', function () {
   var year = document.getElementById('year');
   if (year) year.textContent = new Date().getFullYear();
 
-  // ── Menu-style clock ─────────────────────────────────
-  var timeEl = document.getElementById('wii-clock-time');
-  var dateEl = document.getElementById('wii-clock-date');
-  if (timeEl) {
+  // ── Analog Wii clock ─────────────────────────────────
+  var clockFace = document.getElementById('wii-clock-face');
+  if (clockFace) {
+    var numbersG = document.getElementById('wii-clock-numbers');
+    for (var ci = 1; ci <= 12; ci++) {
+      var angle = ci * Math.PI / 6;
+      var nx = 50 + 34.5 * Math.sin(angle);
+      var ny = 50 - 34.5 * Math.cos(angle);
+      var numEl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      numEl.setAttribute('x', nx.toFixed(1));
+      numEl.setAttribute('y', (ny + 4).toFixed(1));
+      numEl.textContent = ci;
+      numbersG.appendChild(numEl);
+    }
+
+    var hourHand = document.getElementById('wii-clock-hour');
+    var minuteHand = document.getElementById('wii-clock-minute');
+    var secondHand = document.getElementById('wii-clock-second');
+    var clockDateEl = document.getElementById('wii-clock-date');
     var DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    var tick = function () {
+
+    var rotateHand = function (el, deg) { el.setAttribute('transform', 'rotate(' + deg + ' 50 50)'); };
+
+    var clockTick = function () {
       var d = new Date();
-      var h = d.getHours() % 12 || 12;
-      var m = ('0' + d.getMinutes()).slice(-2);
-      timeEl.innerHTML = h + '<span class="wii-colon">:</span>' + m;
-      if (dateEl) dateEl.textContent = DAYS[d.getDay()] + ' ' + (d.getMonth() + 1) + '/' + d.getDate();
+      var h = d.getHours() % 12, m = d.getMinutes(), s = d.getSeconds();
+      rotateHand(hourHand, (h + m / 60) * 30);
+      rotateHand(minuteHand, m * 6 + s * 0.1);
+      rotateHand(secondHand, s * 6);
+      if (clockDateEl) clockDateEl.textContent = DAYS[d.getDay()] + ' ' + (d.getMonth() + 1) + '/' + d.getDate();
     };
-    tick();
-    setInterval(tick, 1000);
+    clockTick();
+    setInterval(clockTick, 1000);
   }
 
   // ── Synthesized menu blips (original tones) ──────────

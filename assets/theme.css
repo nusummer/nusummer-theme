@@ -17,7 +17,8 @@ a:hover { text-decoration: underline; }
 
 /* ── Header ────────────────────────────────────────────── */
 .site-header {
-  position: relative; padding: 12px 6px 14px;
+  position: relative; display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  justify-content: space-between; padding: 12px 6px 14px;
   border-bottom: 2px solid #dde3e6;
 }
 .site-header::before {
@@ -25,12 +26,9 @@ a:hover { text-decoration: underline; }
   background: linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.4) 70%, transparent);
   pointer-events: none;
 }
-.site-header__top { position: relative; display: flex; align-items: flex-start; gap: 16px; justify-content: space-between; }
-.site-header__brand { display: flex; flex-direction: column; align-items: center; gap: 6px; }
 .site-header__status {
-  position: relative; margin: 10px 0 0; text-align: right;
-  font-style: italic; font-size: 13px; color: var(--text, #4b555a);
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  position: relative; flex: 1; margin: 0; text-align: center;
+  font-style: italic; font-size: 15px; color: #8a959b;
 }
 .logo-link { position: relative; display: flex; align-items: center; }
 .logo-text {
@@ -42,11 +40,16 @@ a:hover { text-decoration: underline; }
 .logo-img { display: block; width: auto; object-fit: contain; }
 .header-right { position: relative; display: flex; align-items: center; gap: 18px; }
 
-.wii-clock { text-align: center; line-height: 1.05; user-select: none; }
-.wii-clock-time { display: block; font-size: 26px; font-weight: 700; letter-spacing: 1px; }
-.wii-clock-time .wii-colon { animation: wii-blink 2s steps(1) infinite; }
-.wii-clock-date { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-top: 2px; }
-@keyframes wii-blink { 50% { opacity: .25; } }
+/* ── Analog Wii clock ─────────────────────────────────── */
+.wii-clock-analog { text-align: center; user-select: none; line-height: 1; }
+.wii-clock-analog svg {
+  display: block; margin: 0 auto;
+  filter: drop-shadow(3px 3px 0 var(--shadow-1, #C1634A)) drop-shadow(3px 3px 0 var(--shadow-2, #8FAACA));
+}
+.wii-clock-date {
+  display: block; font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1.5px; margin-top: 9px;
+}
 
 .flag { width: 28px; height: 20px; border: 1px solid #cbd5e1; border-radius: 3px; overflow: hidden; box-shadow: 0 1px 0 rgba(255,255,255,.9); }
 .flag svg { width: 100%; height: 100%; display: block; }
@@ -100,8 +103,28 @@ a:hover { text-decoration: underline; }
 }
 
 /* ── Sidebar ───────────────────────────────────────────── */
-.sidebar-nav { display: flex; flex-direction: column; gap: 14px; padding: 16px; }
-.sidebar-nav .pill { padding: 13px 20px; text-align: center; font-style: italic; color: var(--accent, #2063A2); letter-spacing: .8px; }
+.sidebar-nav { display: flex; flex-direction: row; flex-wrap: wrap; gap: 10px; padding: 16px; }
+.sidebar-nav .pill {
+  flex: 1; justify-content: center; text-align: center; font-style: italic;
+  color: var(--accent, #2063A2); letter-spacing: .8px; padding: 10px 8px; font-size: 12px;
+}
+.sidebar-nav a, .sidebar-nav a:hover { text-decoration: none; }
+.sidebar-nav .nav-btn {
+  filter: drop-shadow(2px 2px 0 var(--shadow-1, #C1634A)) drop-shadow(2px 2px 0 var(--shadow-2, #8FAACA));
+}
+.benzene-btn {
+  position: relative; flex: 1; min-height: 66px;
+  display: flex; align-items: center; justify-content: center;
+  text-decoration: none;
+  filter: drop-shadow(2px 2px 0 var(--shadow-1, #C1634A)) drop-shadow(2px 2px 0 var(--shadow-2, #8FAACA));
+}
+.benzene-btn svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.benzene-btn .label {
+  position: relative; z-index: 1; font-style: italic; font-weight: 700;
+  font-size: 11px; color: var(--accent, #2063A2); text-align: center; line-height: 1.25;
+  padding: 0 22px;
+}
+.benzene-btn:hover { transform: translateY(-1px); }
 
 /* ── Section headings ──────────────────────────────────── */
 .section-heading {
@@ -233,14 +256,28 @@ a:hover { text-decoration: underline; }
 
 /* ── Motion safety ─────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  .wii-clock-time .wii-colon { animation: none; }
+  .clock-second { display: none; }
   .wii-plane-g,   .card:hover, .btn:hover, .pill:hover { animation: none; }
   .card:hover { box-shadow: 0 0 0 2px rgba(32,99,162,.45), 5px 5px 0 var(--shadow-1, #C1634A), 10px 10px 0 var(--shadow-2, #8FAACA); }
 }
+@media (max-width: 700px) {
+  .site-header__status { flex-basis: 100%; order: 10; margin-top: 8px; }
+}
 @media (max-width: 600px) {
   .product-grid { grid-template-columns: 1fr; }
-  .logo-text { font-size: 32px; }
-  .wii-clock-time { font-size: 20px; }
   .product-gallery__arrow { width: 34px; height: 34px; font-size: 17px; }
   .product-gallery__thumb { width: 52px; height: 52px; }
+
+  /* Keep logo + clock + checkout on one compact row; only the
+     status line (order: 10, set above) drops to its own row below.
+     Verified against real font metrics: at these sizes the row fits
+     down to 320px viewport width. The flag is dropped here — with it
+     kept, logo + flag + clock + checkout doesn't fit below ~410px. */
+  .logo-text { font-size: 26px; }
+  .flag { display: none; }
+  .header-right { gap: 8px; }
+  .wii-clock-analog { order: 1; }
+  .header-right .pill { order: 2; padding: 6px 12px; font-size: 11px; }
+  .wii-clock-analog svg { width: 46px; height: 46px; }
+  .wii-clock-date { font-size: 8px; letter-spacing: .8px; margin-top: 5px; }
 }
