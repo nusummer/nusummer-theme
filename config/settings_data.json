@@ -21,7 +21,7 @@
           "show_clock": true,
           "clock_color": "#2063a2",
           "show_flag": false,
-          "show_cart_button": true,
+          "show_cart_button": false,
           "cart_label": "Checkout",
           "show_status": false,
           "status_text": "This website is always under construction."
