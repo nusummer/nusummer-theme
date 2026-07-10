@@ -16,7 +16,8 @@
         "collection": "frontpage",
         "products_limit": 2,
         "show_view_all": true,
-        "view_all_label": "View all",
+        "view_all_label": "Shop",
+        "view_all_url": "/products/as-seen-on-tv-trucker-hat",
         "empty_message": "Select a collection for this section in the theme editor."
       }
     }
