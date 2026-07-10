@@ -1,4 +1,5 @@
-{% comment %} Renders a channel-tile product card. Accepts: product {% endcomment %}
+{% comment %} Renders a channel-tile product card. Accepts: product, truncate (optional, default 110) {% endcomment %}
+{% assign card_truncate = truncate | default: 110 %}
 <article class="card">
   <a class="card-media" href="{{ product.url }}" tabindex="-1" aria-hidden="true">
     {% if product.featured_image %}
@@ -16,7 +17,7 @@
     {{ product.price | money }}
     {% if product.compare_at_price > product.price %}<s>{{ product.compare_at_price | money }}</s>{% endif %}
   </div>
-  <div class="card-body">{{ product.description | strip_html | truncate: 110 }}</div>
+  <div class="card-body">{{ product.description | strip_html | truncate: card_truncate }}</div>
   <div class="card-actions">
     {% if product.available %}
       {% form 'product', product %}
