@@ -41,14 +41,14 @@ a:hover { text-decoration: underline; }
 .header-right { position: relative; display: flex; align-items: center; gap: 18px; }
 
 /* ── Analog Wii clock ─────────────────────────────────── */
-.wii-clock-analog { text-align: center; user-select: none; line-height: 1; }
+.wii-clock-analog { text-align: center; user-select: none; line-height: 1; margin-right: 14px; }
 .wii-clock-analog svg {
   display: block; margin: 0 auto;
   filter: drop-shadow(3px 3px 0 var(--shadow-1, #C1634A)) drop-shadow(3px 3px 0 var(--shadow-2, #8FAACA));
 }
 .wii-clock-date {
-  display: block; font-size: 11px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 1.5px; margin-top: 12px;
+  display: block; font-size: 13px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1.5px; margin-top: 14px;
 }
 
 .flag { width: 28px; height: 20px; border: 1px solid #cbd5e1; border-radius: 3px; overflow: hidden; box-shadow: 0 1px 0 rgba(255,255,255,.9); }
@@ -107,8 +107,10 @@ a:hover { text-decoration: underline; }
 .sidebar-nav .pill {
   flex: 1; justify-content: center; text-align: center; font-style: italic;
   color: var(--accent, #2063A2); letter-spacing: .8px; padding: 10px 8px; font-size: 12px;
+  gap: 8px;
 }
 .sidebar-nav a, .sidebar-nav a:hover { text-decoration: none; }
+.nav-hat-img { width: 32px; height: 32px; border-radius: 6px; object-fit: cover; display: block; flex-shrink: 0; }
 .sidebar-nav .nav-btn {
   filter: drop-shadow(2px 2px 0 var(--shadow-1, #C1634A)) drop-shadow(2px 2px 0 var(--shadow-2, #8FAACA));
 }
@@ -263,6 +265,13 @@ a:hover { text-decoration: underline; }
 }
 @media (max-width: 700px) {
   .site-header__status { flex-basis: 100%; order: 10; margin-top: 8px; }
+  /* Larger 104px desktop clock + its new 14px margin-left are safe on
+     desktop widths but untested in the narrow 601-700px band; scale the
+     clock back down and zero the extra margin here as a precaution.
+     The ≤600px block below (already verified down to 320px) overrides
+     the svg size again for real phones and is unaffected by this rule. */
+  .wii-clock-analog { margin-right: 0; }
+  .wii-clock-analog svg { width: 88px; height: 88px; }
 }
 @media (max-width: 600px) {
   .product-grid { grid-template-columns: 1fr; }
