@@ -5,7 +5,12 @@
         {% if block.settings.shape == 'benzene' %}
           {% render 'nav-benzene', label: block.settings.label, url: block.settings.url %}
         {% else %}
-          <a class="pill nav-btn" href="{{ block.settings.url }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
+          <a class="pill nav-btn" href="{{ block.settings.url }}" {{ block.shopify_attributes }}>
+            {% if block.settings.image != blank %}
+              <img class="nav-hat-img" src="{{ block.settings.image | image_url: width: 64 }}" alt="" width="32" height="32" loading="lazy">
+            {% endif %}
+            <span>{{ block.settings.label }}</span>
+          </a>
         {% endif %}
       {% endfor %}
     {% else %}
@@ -16,7 +21,10 @@
         not a simplified stand-in, so Research Chemicals renders via the same benzene
         snippet used by the block path.
       {% endcomment %}
-      <a class="pill nav-btn" href="{{ routes.all_products_collection_url }}">Truckers n Shirts</a>
+      <a class="pill nav-btn" href="/products/as-seen-on-tv-trucker-hat">
+        <img class="nav-hat-img" src="{{ 'hat-button.png' | asset_url }}" alt="" width="32" height="32" loading="lazy">
+        <span>Buy Now</span>
+      </a>
       {% render 'nav-benzene', label: 'Research Chemicals', url: '/products/5-alpha-dhp' %}
     {% endif %}
   </nav>
@@ -33,6 +41,7 @@
       "settings": [
         { "type": "text", "id": "label", "label": "Label", "default": "Link" },
         { "type": "url", "id": "url", "label": "URL" },
+        { "type": "image_picker", "id": "image", "label": "Icon image", "info": "Optional small icon/photo shown to the left of the label." },
         {
           "type": "select",
           "id": "shape",
@@ -51,7 +60,7 @@
     {
       "name": "Sidebar navigation",
       "blocks": [
-        { "type": "nav_link", "settings": { "label": "Truckers n Shirts", "url": "/collections/all", "shape": "pill" } },
+        { "type": "nav_link", "settings": { "label": "Buy Now", "url": "/products/as-seen-on-tv-trucker-hat", "shape": "pill" } },
         { "type": "nav_link", "settings": { "label": "Research Chemicals", "url": "/products/5-alpha-dhp", "shape": "benzene" } }
       ]
     }

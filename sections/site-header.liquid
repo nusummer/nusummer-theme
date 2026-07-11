@@ -29,16 +29,9 @@
       </div>
     {% endif %}
 
-    {% if section.settings.show_cart_button %}
-      <a class="pill" href="{{ routes.cart_url }}">
-        {{ section.settings.cart_label }}
-        {% if cart.item_count > 0 %}({{ cart.item_count }}){% endif %}
-      </a>
-    {% endif %}
-
     {% if section.settings.show_clock %}
       <div class="wii-clock-analog" aria-hidden="true">
-        <svg id="wii-clock-face" width="84" height="84" viewBox="0 0 100 100">
+        <svg id="wii-clock-face" width="104" height="104" viewBox="0 0 100 100">
           <circle cx="50" cy="50" r="47" fill="#ffffff" stroke="#8FAACA" stroke-width="3"/>
           <circle cx="50" cy="50" r="41" fill="none" stroke="#e2e8eb" stroke-width="1"/>
           <g id="wii-clock-numbers" font-family="'Times New Roman', Times, serif" font-weight="700" font-size="11.5" fill="#2063A2" text-anchor="middle"></g>
@@ -50,6 +43,13 @@
         </svg>
         <span class="wii-clock-date" id="wii-clock-date" style="color: {{ section.settings.clock_color }};"></span>
       </div>
+    {% endif %}
+
+    {% if section.settings.show_cart_button %}
+      <a class="pill" href="{{ routes.cart_url }}">
+        {{ section.settings.cart_label }}
+        {% if cart.item_count > 0 %}({{ cart.item_count }}){% endif %}
+      </a>
     {% endif %}
   </div>
 </header>
