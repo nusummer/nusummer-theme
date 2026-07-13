@@ -106,12 +106,12 @@ a:hover { text-decoration: underline; }
 .sidebar-nav { display: flex; flex-direction: row; flex-wrap: wrap; gap: 10px; padding: 16px; }
 .sidebar-nav .pill {
   flex: 1; justify-content: center; text-align: center; font-style: italic;
-  color: var(--accent, #2063A2); letter-spacing: .8px; padding: 12px 10px; font-size: 12px;
-  gap: 6px; flex-wrap: wrap;
+  color: var(--accent, #2063A2); letter-spacing: .8px; padding: 10px 8px; font-size: 12px;
+  gap: 6px; flex-wrap: nowrap; min-width: 0;
 }
-.sidebar-nav .pill span { flex-basis: 100%; text-align: center; }
+.sidebar-nav .pill span { min-width: 0; white-space: normal; line-height: 1.15; }
 .sidebar-nav a, .sidebar-nav a:hover { text-decoration: none; }
-.nav-hat-img { width: 64px; height: 64px; border-radius: 6px; object-fit: cover; display: block; flex-shrink: 0; }
+.nav-hat-img { width: 48px; height: 48px; border-radius: 6px; object-fit: cover; display: block; flex-shrink: 0; }
 .sidebar-nav .nav-btn {
   filter: drop-shadow(2px 2px 0 var(--shadow-1, #C1634A)) drop-shadow(2px 2px 0 var(--shadow-2, #8FAACA));
 }
