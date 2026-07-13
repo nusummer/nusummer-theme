@@ -41,7 +41,7 @@ a:hover { text-decoration: underline; }
 .header-right { position: relative; display: flex; align-items: center; gap: 18px; }
 
 /* ── Analog Wii clock ─────────────────────────────────── */
-.wii-clock-analog { text-align: center; user-select: none; line-height: 1; margin-right: 14px; }
+.wii-clock-analog { text-align: center; user-select: none; line-height: 1; margin-right: 28px; }
 .wii-clock-analog svg {
   display: block; margin: 0 auto;
   filter: drop-shadow(3px 3px 0 var(--shadow-1, #C1634A)) drop-shadow(3px 3px 0 var(--shadow-2, #8FAACA));
@@ -106,11 +106,12 @@ a:hover { text-decoration: underline; }
 .sidebar-nav { display: flex; flex-direction: row; flex-wrap: wrap; gap: 10px; padding: 16px; }
 .sidebar-nav .pill {
   flex: 1; justify-content: center; text-align: center; font-style: italic;
-  color: var(--accent, #2063A2); letter-spacing: .8px; padding: 10px 8px; font-size: 12px;
-  gap: 8px;
+  color: var(--accent, #2063A2); letter-spacing: .8px; padding: 12px 10px; font-size: 12px;
+  gap: 6px; flex-wrap: wrap;
 }
+.sidebar-nav .pill span { flex-basis: 100%; text-align: center; }
 .sidebar-nav a, .sidebar-nav a:hover { text-decoration: none; }
-.nav-hat-img { width: 32px; height: 32px; border-radius: 6px; object-fit: cover; display: block; flex-shrink: 0; }
+.nav-hat-img { width: 64px; height: 64px; border-radius: 6px; object-fit: cover; display: block; flex-shrink: 0; }
 .sidebar-nav .nav-btn {
   filter: drop-shadow(2px 2px 0 var(--shadow-1, #C1634A)) drop-shadow(2px 2px 0 var(--shadow-2, #8FAACA));
 }
@@ -271,7 +272,7 @@ a:hover { text-decoration: underline; }
      The ≤600px block below (already verified down to 320px) overrides
      the svg size again for real phones and is unaffected by this rule. */
   .wii-clock-analog { margin-right: 0; }
-  .wii-clock-analog svg { width: 88px; height: 88px; }
+  .wii-clock-analog svg { width: 106px; height: 106px; }
 }
 @media (max-width: 600px) {
   .product-grid { grid-template-columns: 1fr; }
